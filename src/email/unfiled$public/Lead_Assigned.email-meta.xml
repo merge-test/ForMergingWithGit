@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Lead Assigned</name>
+    <style>none</style>
+    <subject>{!Contact.Full_Name__c}  - A lead has been assigned to you</subject>
+    <textOnly>{!Contact.Sales_Head__c}
+
+A Lead {!Contact.Full_Name__c} has been assigned to you.  They have expressed interest in working with us and the sooner they are contacted the better.
+
+{!Contact.Phone}
+{!Contact.Email}
+{!Account.Name}
+
+
+Keith Notes
+{!Contact.Description}
+
+If you have questions about {!Contact.Full_Name__c} please ask Manager- Projects, Keith Fink and he will gladly hand over any information he has.
+
+Best,
+Manager- Projects, 
+Keith Fink
+
+
+DISCLAIMER: This message is meant for the intended party and no others. This data has been scienced by professionals and non data scientists may hurt themselves trying to comprehend its beauty</textOnly>
+    <type>custom</type>
+</EmailTemplate>

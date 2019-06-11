@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AnalyticSnapshot xmlns="http://soap.sforce.com/2006/04/metadata">
+    <mappings>
+        <sourceField>JobName</sourceField>
+        <sourceType>snapshot</sourceType>
+        <targetField>Email_Responses_Snapshot__c.Name</targetField>
+    </mappings>
+    <mappings>
+        <sourceField>LAST_NAME</sourceField>
+        <sourceType>tabular</sourceType>
+        <targetField>Email_Responses_Snapshot__c.Subject__c</targetField>
+    </mappings>
+    <mappings>
+        <sourceField>FIRST_NAME</sourceField>
+        <sourceType>tabular</sourceType>
+        <targetField>Email_Responses_Snapshot__c.First_Name__c</targetField>
+    </mappings>
+    <mappings>
+        <sourceField>Contact.Contact_Count__c</sourceField>
+        <sourceType>tabular</sourceType>
+        <targetField>Email_Responses_Snapshot__c.Contact_Count__c</targetField>
+    </mappings>
+    <name>Email Responses Sanapshot</name>
+    <runningUser>sfdc2admin2@ny-engineers.com</runningUser>
+    <sourceReport>unfiled$public/Email_Responses_Sanapshot</sourceReport>
+    <targetObject>Email_Responses_Snapshot__c</targetObject>
+</AnalyticSnapshot>

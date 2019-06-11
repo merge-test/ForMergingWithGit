@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Proposal Follow Up Week 4_NJ</name>
+    <style>none</style>
+    <subject>Touching Base – Proposal Status</subject>
+    <textOnly>Hi {!Opportunity.proposal_issued_to_1__c}, 
+
+Have you given any additional consideration to my proposal about {!Opportunity.Name}? I’d be happy to speak with you and answer any questions that may have come up. 
+
+If you have any questions specifically about the fees that engineering companies typically charge, you might find the information here useful: 
+
+http://www.ny-engineers.com/blog/why-do-consulting-engineers-cost-so-much 
+
+Please let me know if there is a time we can speak. 
+
+Thank you! 
+{!Opportunity.Sales_Head__c}, Principal 
+
+New Jersey Engineers
+https://www.ny-engineers.com/new-jersey-mep-engineering
+973.928.0343
+alexg@nj-engineers.com</textOnly>
+    <type>custom</type>
+</EmailTemplate>

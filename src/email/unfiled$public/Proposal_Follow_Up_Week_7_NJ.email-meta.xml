@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Proposal Follow Up Week 7_NJ</name>
+    <style>none</style>
+    <subject>{!Opportunity.Name} Proposal</subject>
+    <textOnly>Hi {!Opportunity.proposal_issued_to_1__c}, 
+
+I understand that I might not be the only ones whom you contacted for the {!Opportunity.Name} project. Regardless of what you decide to do with the project or whom you decide to work with, I would like to provide any assistance I can. As is the case, I thought that the following could help you as you move forward: 
+
+http://www.ny-engineers.com/blog/tips-for-managing-your-design-and-construction-team 
+
+Just remember that they are working for you and working to provide you with what you want and anticipate. They want you to be involved and communicating with them as best you can and at your availability. 
+
+If you have an update you could provide, I would greatly appreciate it. Please feel to reach out to myself or any member of NJ Engineers. We are all here to help. 
+
+Regards, 
+{!Opportunity.Sales_Head__c}, Principal 
+
+New Jersey Engineers
+https://www.ny-engineers.com/new-jersey-mep-engineering
+973.928.0343
+alexg@nj-engineers.com</textOnly>
+    <type>custom</type>
+</EmailTemplate>

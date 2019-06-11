@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>PM Reminder Email</name>
+    <style>none</style>
+    <subject>Proposal Reminder</subject>
+    <textOnly>Hello PM,
+
+Friendly reminder that {!Opportunity.Name} has a proposal and we estimated that the close date is Today.
+
+If you have any questions please feel free to ask Data Chris.
+
+Sincerely
+Data Chris</textOnly>
+    <type>custom</type>
+</EmailTemplate>

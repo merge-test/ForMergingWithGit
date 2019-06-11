@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Proposal Follow Up Week 3</name>
+    <style>none</style>
+    <subject>Touching Base – Proposal Status</subject>
+    <textOnly>Hi {!Opportunity.proposal_issued_to_1__c},
+
+I recently reached out to you regarding the status of the proposal {!Opportunity.Name}. I understand that you’re busy and may not have had some time to review the information just yet. Part of that uncertainty can be surrounding contractor decisions.
+
+We discuss how to choose the best contractor for your job here:
+http://www.ny-engineers.com/blog/how-to-select-an-engineering-consultant
+
+Have a great day!
+
+Regards,
+{!Opportunity.Sales_Head__c}, Principal
+
+275 West 39th Street, 2nd Floor
+New York, NY 10018
+212.575.5300
+michaelt@ny-engineers.com
+w. NYE FaceBook
+
+For fastest new project proposal response, send scope directly to: proposal@ny-engineers.com
+For fastest submittal review, send directly to: submittal@ny-engineers.com
+For fastest DOB form review, send directly to: DOB@ny-engineers.com</textOnly>
+    <type>custom</type>
+</EmailTemplate>

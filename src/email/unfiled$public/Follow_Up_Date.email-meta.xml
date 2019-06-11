@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Follow Up Date</name>
+    <style>none</style>
+    <subject>Time To Follow Up with {!Opportunity.Name}</subject>
+    <textOnly>You have marked the Follow Up date as tomorrow for {!Opportunity.Name}
+
+The following is Project Specific Information
+Proposal Issued to: {!Opportunity.proposal_issued_to_1__c}
+Proposal Issued Date: {!Opportunity.Proposal_Issued__c}
+
+{!Opportunity.Scope__c}</textOnly>
+    <type>custom</type>
+</EmailTemplate>

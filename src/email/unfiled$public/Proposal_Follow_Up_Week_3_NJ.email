@@ -1,0 +1,15 @@
+Hi {!Opportunity.proposal_issued_to_1__c},
+<br>
+<br>I recently reached out to you regarding the status of the proposal {!Opportunity.Name}. I understand that you’re busy and may not have had some time to review the information just yet. If you need more information surrounding construction tax and incentive programs you can benefit from, we discuss the top 5 construction tax benefits and incentive programs in New Jersey:
+<br>
+<br><a href="https://www.ny-engineers.com/blog/top-5-construction-tax-benefits-and-incentive-programs-in-new-jersey">top-5-construction-tax-benefits-and-incentive-programs-in-new-jersey</a>
+<br>
+<br>Have a great day!
+<br>
+<br>Regards, 
+<br> {!Opportunity.Sales_Head__c}, Principal 
+<br>
+<br>New Jersey Engineers
+<br> https://www.ny-engineers.com/new-jersey-mep-engineering
+<br> 973.928.0343
+<br>alexg@nj-engineers.com

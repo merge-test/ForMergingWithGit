@@ -1,0 +1,12 @@
+<br>CONGRATS {!Opportunity.Name} has come back with a signed proposal.
+<br>
+<br>Information is below. 
+<br>Amount:  {!Opportunity.Amount}
+<br>Client:  {!Opportunity.Account}
+<br>Point of Contact: {!Opportunity.proposal_issued_to_1__c}
+<br>
+<br>NYE PM: {!Opportunity.Project_Manager_c__c}
+<br>
+<br>Please add to Infocus and input the Infocus project number in salesforce under NYE Project number
+<br>
+<br>Any questions please ask {!Opportunity.Project_Manager_c__c} or Keith

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Proposal Follow Up Week 3_NJ</name>
+    <style>none</style>
+    <subject>Touching Base – Proposal Status</subject>
+    <textOnly>Hi {!Opportunity.proposal_issued_to_1__c},
+
+I recently reached out to you regarding the status of the proposal {!Opportunity.Name}. I understand that you’re busy and may not have had some time to review the information just yet. If you need more information surrounding construction tax and incentive programs you can benefit from, we discuss the top 5 construction tax benefits and incentive programs in New Jersey:
+
+https://www.ny-engineers.com/blog/top-5-construction-tax-benefits-and-incentive-programs-in-new-jersey
+
+Have a great day!
+
+Regards,
+{!Opportunity.Sales_Head__c}, Principal 
+
+New Jersey Engineers
+https://www.ny-engineers.com/new-jersey-mep-engineering
+973.928.0343
+alexg@nj-engineers.com</textOnly>
+    <type>custom</type>
+</EmailTemplate>

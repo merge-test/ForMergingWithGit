@@ -1,0 +1,2 @@
+<apex:page standardController="Opportunity" tabStyle="Opportunity" extensions="ResetOppController" action="{!resetOpp}">
+</apex:page>

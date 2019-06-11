@@ -1,0 +1,13 @@
+Hi {!Opportunity.Sales_Head__c},
+<br>
+<br>I haven’t heard back from you in the last two months regarding the proposal for {!Opportunity.Name}, so I’m going to assume you’ve gone in a different direction or the project is not moving forward. Mind if I close the file?
+<br>
+<br>I appreciate the opportunity; please let me know if I can be of any assistance in the future. 
+<br>
+<br>Thank you!
+<br>{!Opportunity.Sales_Head__c}, Principal 
+<br>
+<br>New Jersey Engineers
+<br> https://www.ny-engineers.com/new-jersey-mep-engineering
+<br> 973.928.0343
+<br>alexg@nj-engineers.com

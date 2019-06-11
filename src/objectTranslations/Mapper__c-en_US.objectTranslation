@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Mapper</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Mappers</value>
+    </caseValues>
+    <fields>
+        <label><!-- Field Name --></label>
+        <name>Field_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object --></label>
+        <name>Object__c</name>
+        <picklistValues>
+            <masterLabel>Account</masterLabel>
+            <translation><!-- Account --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoice</masterLabel>
+            <translation><!-- Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Opportunity</masterLabel>
+            <translation><!-- Opportunity --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Quickbooks Field Name --></label>
+        <name>Quickbooks_Field_Name__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

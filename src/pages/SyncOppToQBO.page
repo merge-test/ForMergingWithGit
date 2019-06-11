@@ -1,0 +1,15 @@
+<apex:page standardController="Opportunity" tabStyle="Opportunity" extensions="SyncOppQBOController" action="{!syncFromOpportunity}">
+    <apex:pageMessages ></apex:pageMessages>
+    <apex:form >
+        <apex:outputPanel rendered="{! !Error}">
+            <h2>This Record is being synced with QBO.</h2>
+        </apex:outputPanel>
+        <br/>
+        <div align="center">
+            <apex:outputPanel rendered="{!AND(Error,accountId != null)}">
+                <apex:commandButton action="{!redirectToAccount}" value="Go to Account"/>
+            </apex:outputPanel>
+            <apex:commandButton action="{!redirectToOpp}" value="Go Back"/>
+        </div>        
+    </apex:form>
+</apex:page>

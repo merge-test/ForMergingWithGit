@@ -1,0 +1,89 @@
+# Log file
+*.log
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Eclipse project files #
+/.settings
+.project
+/Referenced Packages
+src/ActionHub/
+src/Adobe Sign/
+src/C5r_Desktop_oauth/
+src/C5r_for_Android_oauth/
+src/C5r_for_Android_oauth_android/
+src/C5r_for_Android_oauth_notif/
+src/C5r_for_BlackBerry_oauth/
+src/C5r_for_iOS_oauth/
+src/C5r_for_iOS_oauth_apple/
+src/C5r_for_iOS_oauth_notif/
+src/Chatter_Desktop/
+src/Chatter_for_Android/
+src/Chatter_for_BlackBerry/
+src/Chatter_for_iOS/
+src/Dataloader_Bulk/
+src/Dataloader_Bulk_oauth/
+src/Dataloader_P5r_oauth/
+src/Dataloader_Partner/
+src/Duplicate Check for Salesforce1/
+src/Forcecom_IDE/
+src/Forcecom_IDE_oauth/
+src/Forcecom_Migration_Tool/
+src/Forcecom_Migration_Tool_oauth/
+src/Lead Convert Chatter/
+src/Multi-View Calendar/
+src/S2e_L2e_C11n_Assistant_QA_oauth/
+src/S8e_C8x_oauth/
+src/S8e_M4e_Dashboards_oauth/
+src/S8e_T3h_oauth/
+src/S8e_for_Outlook_oauth/
+src/S91_for_Windows_oauth/
+src/S91_for_Windows_oauth_notif/
+src/S91_for_Windows_oauth_windows/
+src/S9A_oauth/
+src/SIRC/
+src/SIRC_oauth/
+src/Sage Connected Apps/
+src/Sage Live/
+src/Sage_Life_iOS/
+src/Sage_Life_iOS_oauth/
+src/Sage_Life_iOS_oauth_apple/
+src/Sage_Live_Configuration_Assistant/
+src/Sage_Live_Configuration_Assistant_QA/
+src/Sage_Live_Configuration_Assistant_oauth/
+src/Sage_Live_Excel_Reporter/
+src/Sage_Live_Excel_Reporter_oauth/
+src/Sage_Live_Help_C7y_oauth/
+src/Sage_Live_Help_Community/
+src/Sage_Live_iOS_S5x_oauth/
+src/Sage_Live_iOS_S5x_oauth_apple/
+src/Sage_Live_iOS_Sandbox/
+src/Sage_S8e_Services_QA_oauth/
+src/Sage_S8e_Services_oauth/
+src/Sage_Salesforce_Services/
+src/Sage_Salesforce_Services_QA/
+src/Sage_Taxation_S5e_Production_oauth/
+src/Sage_Taxation_S5e_oauth/
+src/Sage_Taxation_Service/
+src/Sage_Taxation_Service_Production/
+src/Salesforce Communities Management (for Communities with Chatter)/
+src/Salesforce1_for_Windows/
+src/SalesforceA/
+src/Salesforce_Chatterbox/
+src/Salesforce_Mobile_Dashboards/
+src/Salesforce_Touch/
+src/Salesforce_for_Outlook/
+src/TaskRay/
+src/Update Any/
+src/Workbench/
+src/Workbench_oauth/
+src/dataloader_io2_oauth_c4s/

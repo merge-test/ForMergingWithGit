@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>New_York_Engineers_Newsletter</letterhead>
+    <name>NYE Newsletter</name>
+    <style>formalLetter</style>
+    <subject>NYE Newsletter</subject>
+    <textOnly>Test email
+
+AKA Hotels
+-Times Square and Central Park both have completed construction and have been converted into hotels that can support both long and short term stays. 
+
+Safran
+
+
+Upcoming Events/ Projects 
+	
+
+Links, Phone numbers, address</textOnly>
+    <type>html</type>
+</EmailTemplate>

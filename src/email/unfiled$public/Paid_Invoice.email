@@ -1,0 +1,5 @@
+Congrats!!  {!Opportunity.Account} Just paid {!Opportunity.Paid_Amount__c} to <br>fulfill invoice number  {!Opportunity.Invoice_Number__c} on Project {!Opportunity.Name}.
+<br>
+<br>If you have any questions please email Rich, Gita, or Keith.
+<br>
+<br>Keep the money Rolling!

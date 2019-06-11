@@ -1,0 +1,144 @@
+<apex:page controller="MapperClass" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true" >
+    
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"/>
+    
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <title>Fields Mapper</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- Import the Design System style sheet -->
+        <apex:slds />
+    </head>
+    <script>
+    var previous;
+    var status = false;
+    $(document).ready(function()
+                      { 
+                          $('select').on('focus',function () 
+                                         {
+                                             // Store the current value on focus and on change
+                                             debugger; 
+                                             previous = this.value;
+                                         }).change(
+                              function ()
+                              {
+                                  // Do something with the previous value after the change
+                                  debugger;
+                                  var classOfObj = $(this).attr('class');
+                                  me= this;
+                                  $(this).removeClass(classOfObj);
+                                  $('.'+classOfObj).each(function(){
+                                      if(this.value == me.value && !classOfObj.includes('Invoice'))
+                                      {
+                                          $(this).fadeToggle();
+                                          $(me).fadeToggle();
+                                          $(this).fadeToggle();
+                                          $(me).fadeToggle();
+                                          if(classOfObj.startsWith('destination'))
+                                          {
+                                              me.value = previous;
+                                          }
+                                      }
+                                  });
+                                  $(this).addClass(classOfObj);
+                              });                                                    
+                      });
+    function validateCompleteData(){
+        status = false;
+        $("select").each(function(){
+            if(this.value == 'None')
+            { 
+                $(this).fadeToggle();
+                $(this).fadeToggle();
+                status = true;
+            }
+        }).promise().done(function() {
+            if(status == 'false')
+            {
+                mapperSaver(); 
+                $('#showmsg').toggle(1000, function() {
+                    $('#showmsg').toggle(1000);
+                });
+                $('#saveBtn').toggle(1000, function() {
+                    $('#saveBtn').toggle(1000);
+                });
+            }
+        });
+        
+    }
+    
+    function deleteMe(eleId)
+    {
+        console.log(1);
+    }
+    </script>
+    <div align="center"  class="slds-scope">
+        <apex:form >
+            <apex:actionFunction name="mapperSaver" action="{!saveMapping}" reRender="form" />
+            <apex:actionFunction name="deleteMe" action="{!deleteRecord}" reRender="form" >
+                <apex:param name="idd" value=""/>
+            </apex:actionFunction>
+            <apex:repeat value="{!allObjects}" var="obj" id="repeater">
+                <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-x-small-size_x-small" >
+                    <caption class="slds-app-launcher__tile-body"><h2 class="slds-align--absolute-center">{!obj.typeOfObj}</h2></caption>
+                    <thead>
+                        <tr class="slds-text-title--caps">                            
+                            <th scope="col">
+                                <div class="slds-truncate" title="Name" align="center"><b>Salesforce Field</b></div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Name" align="center"></div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Name" align="center"><b>Quickbooks Field</b></div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Action" align="center"></div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:variable var="myVariable" value="{!1}"/>
+                        <apex:repeat VALUE="{!obj.listOfObjs}" var="insta">
+                            <tr class="slds-text-title--caps">
+                                <th scope="col">
+                                    <apex:selectList styleClass="source{!obj.typeOfObj}" value="{!insta.Field_Name__c}"  multiselect="false" size="1" >
+                                        <apex:selectOptions value="{!obj.allLabels}"></apex:selectOptions>
+                                    </apex:selectList>
+                                </th>
+                                <th scope="col">
+                                    &nbsp;-->
+                                </th>
+                                <th scope="col">
+                                    <apex:selectList style="slds-select" styleClass="destination{!obj.typeOfObj}" value="{!insta.Quickbooks_Field_Name__c}" multiselect="false" size="1">
+                                        <apex:selectOptions value="{!obj.allQBLabels}"></apex:selectOptions>
+                                    </apex:selectList>
+                                </th>
+                                <th scope="col">
+                                    <div style="cursor:  pointer;" onclick="$(this).parent('th').parent('tr').toggle(1000, function(){$(this).parent('th').parent('tr').remove();deleteMe('{!insta.id}');});">X</div>
+                                </th>
+                            </tr>
+                            <apex:variable value="{!myVariable+1}" var="myVariable"/>
+                        </apex:repeat>
+                    </tbody>
+                </table><br/>
+                <apex:commandButton styleClass="" value="Add (+)" action="{!updateInvList}"  rendered="{!obj.typeOfObj == 'Invoice'}">
+                </apex:commandButton>
+                
+                <apex:commandButton styleClass="" value="Add (+)" action="{!updateOppList}"  rendered="{!obj.typeOfObj == 'Opportunity'}">
+                </apex:commandButton>
+                
+                <apex:commandButton styleClass="" value="Add (+)" action="{!updateAccList}"  rendered="{!obj.typeOfObj == 'Account'}">
+                </apex:commandButton>
+                <br/>
+                <br/>
+            </apex:repeat>
+            <div id="showmsg" style="display:none; width:100%" class="slds-box_x-small">
+                Mapping saved successfully!
+            </div>
+            <input type="button" id="saveBtn" value="Save" onclick="validateCompleteData()" />
+            
+        </apex:form>
+    </div>
+</apex:page>

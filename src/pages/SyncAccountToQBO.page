@@ -1,0 +1,9 @@
+<apex:page standardController="Account" tabStyle="Opportunity" extensions="SyncOppQBOController" action="{!syncFromAccount}">
+    <apex:form >
+        <h2>This Record is being synced with QBO.</h2>
+        <br/>
+        <div align="center">
+            <apex:commandButton action="{!redirectToAccount}" value="Go Back"/>
+        </div>
+    </apex:form>
+</apex:page>

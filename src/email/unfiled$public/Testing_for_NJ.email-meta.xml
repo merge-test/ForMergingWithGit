@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Testing for NJ</name>
+    <style>none</style>
+    <subject>{!Opportunity.Name} Proposal</subject>
+    <textOnly>Hi
+
+Please test the link
+
+how-an-mep-engineer-accelerates-the-building-process-timeline
+
+This is a Test Email only! It is not intended for public distribution.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

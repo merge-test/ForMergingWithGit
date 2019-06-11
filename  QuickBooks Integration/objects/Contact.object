@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Integration__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Change to Request Sync to Update in QuickBooks Online</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Change to Request Sync to Update in QuickBooks Online</inlineHelpText>
+        <label>Integration</label>
+        <picklist>
+            <picklistValues>
+                <fullName>None</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Request Sync</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Sync</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>QBName__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>FirstName &amp;&quot; &quot;&amp; LastName &amp;&quot;-&quot;&amp; Account.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>QBName</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QB_Error__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>QB Error</label>
+        <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Quickbooks_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>true</externalId>
+        <label>Quickbooks Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <webLinks>
+        <fullName>Update_Contact_to_QBOE</fullName>
+        <availability>online</availability>
+        <description>Push Salesforce Contact to QBO Customer/Contact (Salesforce Classical)</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>SF Contact &gt;&gt; QBO Customer/Contact</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>var URL=&quot;/apex/AVSFQB__CreateContactFromSF2QBO?id={! Contact.Id }&quot;; 
+window.open(URL,&quot;DBSync&quot;,&quot;menubar=0,resizable=0,width=650,height=300&quot;);</url>
+    </webLinks>
+</CustomObject>

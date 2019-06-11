@@ -1,0 +1,17 @@
+Hi {!Opportunity.proposal_issued_to_1__c}, 
+<br>
+<br>I recently reached out to you regarding the status of the proposal {!Opportunity.Name}. I understand that you’re busy and may not have had some time to review the information just yet. Part of that uncertainty can be surrounding the specific challenges associated with {!Opportunity.Market_Sector__c} projects.  New Jersey Engineers has completed numerous projects in this domain.
+<br>
+<br> If you have any questions about the proposal please call us at 973.928.0343.
+<br>
+<br>Have a great day! 
+<br>
+<br>Regards, 
+<br>
+{!Opportunity.Sales_Head__c},
+<br> Principal 
+<br>
+<br>New Jersey Engineers
+<br> https://www.ny-engineers.com/new-jersey-mep-engineering
+<br> 973.928.0343
+<br>alexg@nj-engineers.com

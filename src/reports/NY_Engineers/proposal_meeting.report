@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Contact$Account</field>
+    </columns>
+    <columns>
+        <field>Contact$Name</field>
+    </columns>
+    <columns>
+        <field>Contact.OpportunityContactRoles.Activities$Subject</field>
+    </columns>
+    <columns>
+        <field>Contact$Last_Meeting__c</field>
+    </columns>
+    <columns>
+        <field>Contact$CreatedDate</field>
+    </columns>
+    <columns>
+        <field>Contact.OpportunityContactRoles*Opportunity$Proposal_Issued__c</field>
+    </columns>
+    <columns>
+        <field>Contact.OpportunityContactRoles$Name</field>
+    </columns>
+    <columns>
+        <field>Contact.OpportunityContactRoles$LeadSource</field>
+    </columns>
+    <format>Summary</format>
+    <name>proposal / meeting</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Proposals_Issued_within_2_months_of_meeting__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Contact$Last_Meeting__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>
