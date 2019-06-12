@@ -64,7 +64,7 @@
     
     function deleteAllStages(schedulerCount)
     {
-     	/*var totalRowCount = 0;
+        /*var totalRowCount = 0;
         var rowCount = 0;
         var table = document.getElementById("tableFeeSchedule");
         var rows = table.getElementsByTagName("tr")
