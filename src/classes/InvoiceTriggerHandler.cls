@@ -19,6 +19,37 @@ public class InvoiceTriggerHandler {
         }
     }
     
+    public static void handleDefaultCheck(List<Invoice__c> newInvoices,Map<Id,Invoice__c> oldInvoices){
+        List<String> defaultStages = new List<String>();
+        defaultStages.add(System.label.Default_Stage_1);
+        defaultStages.add(System.label.Default_Stage_2);
+        defaultStages.add(System.label.Default_Stage_3);
+        defaultStages.add(System.label.Default_Stage_4);
+        defaultStages.add(System.label.Default_Stage_5);
+        defaultStages.add(System.label.Default_Stage_6);
+        defaultStages.add(System.label.Default_Stage_7);
+        
+        if(oldInvoices == null){
+            for(Invoice__c inv : newInvoices){
+                if(defaultStages.contains(inv.Name)){
+                    inv.Default__c = true;
+                }
+            }
+        }
+        else{
+            for(Invoice__c inv : newInvoices){
+                if(inv.Name != oldInvoices.get(inv.Id).Name){
+                    if(inv.Default__c == true && defaultStages.contains(inv.Name) == false){
+                        inv.Default__c = false;
+                    }
+                    else if(inv.Default__c == false && defaultStages.contains(inv.Name) == true){
+                        inv.Default__c = true;
+                    }
+                }
+            }
+        }
+    }
+        
     public static void preventNullValues(List<Invoice__c> newInvoices){
         for(Invoice__c invoice : newInvoices){
             invoice.Fee__c = ((invoice.Fee__c == null)?0:invoice.Fee__c);
@@ -103,22 +134,6 @@ public class InvoiceTriggerHandler {
             inv.Excpected_Billing_Date__c = getBillingDate(inv,relatedOpportunities.get(inv.Opportunity__c),defaultInvoices,othersDefaultInvoices,true);
         }
         
-    }
-    
-    public static Integer getDelays(String delays){
-        if(delays == '1 week'){
-            return 1;
-        }
-        else if(delays == '2 weeks'){
-            return 2;
-        }
-        else if(delays == '4 weeks'){
-            return 4;
-        }
-        else if(delays == '8 weeks'){
-            return 8;
-        }
-        return 0;
     }
     
     public static PreviousDelays getPreviousDelays(Boolean defaultInv,Map<String,Invoice__c> defaultInvoices, Map<String,Invoice__c> othersDefaultInvoices){
@@ -298,7 +313,8 @@ public class InvoiceTriggerHandler {
         for(Invoice__c inv : newInvoices){
             if((inv.Opp_Close_Date_Change_Track__c != oldInvoices.get(inv.Id).Opp_Close_Date_Change_Track__c) ||
                (inv.Time_Frame__c != oldInvoices.get(inv.Id).Time_Frame__c) ||
-               (inv.Delays_Month__c != oldInvoices.get(inv.Id).Delays_Month__c)){
+               (inv.Delays_Month__c != oldInvoices.get(inv.Id).Delays_Month__c) || 
+               (inv.Default__c != oldInvoices.get(inv.Id).Default__c)){
                    impactedInvoices.add(inv);
                    impactedInvoiceIds.add(inv.Id);
                    oppIds.add(inv.Opportunity__c);
