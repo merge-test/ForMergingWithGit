@@ -13,7 +13,6 @@
         var json = '{!Invoices }';
         json = json.replace('[', '').replace(']', '');
         var ids = json.split(',');
-        console.log(ids.length);
         for(var i=1; i <= ids.length ; i++){
             DisableDelete($('[id$=checkbox'+i+']').children('input').prop('checked'),i);
         }
@@ -25,10 +24,7 @@
     
     
     function RedirectToAutoBilling(){
-        
-        //       window.top.location.href = '/apex/feeSchedule?id={!oppId}';   
         window.open("/apex/feeSchedule?id={!oppId}","_blank");
-        
     }
     function refresh(){
         refreshTable();
@@ -64,29 +60,12 @@
     
     function deleteAllStages(schedulerCount)
     {
-        /*var totalRowCount = 0;
-        var rowCount = 0;
-        var table = document.getElementById("tableFeeSchedule");
-        var rows = table.getElementsByTagName("tr")
-         for (var i = 0; i < rows.length; i++) {
-            totalRowCount++;
-            if (rows[i].getElementsByTagName("td").length > 0) {
-                rowCount++;
-                var str ="checkboxInput"+rowCount; 
-                alert(document.getElementById(str).checked);
-               
-            }
-        }
-        var message = "Total Row Count: " + totalRowCount;
-        message += "\nRow Count: " + rowCount;
-        alert(message);
-        */
-         var r;
+        var r;
         if(schedulerCount>0){
-           r = confirm(schedulerCount+" Scheduler is running on the stages. Do you still want to delete?");
+            r = confirm(schedulerCount+" Scheduler is running on the stages. Do you still want to delete?");
         }
         else{
-          r = confirm("Are you sure you want to delete all stages?");        
+            r = confirm("Are you sure you want to delete all stages?");        
         }
         if (r == true) {
             startLoading();
@@ -102,10 +81,6 @@
             startLoading();
             
         }
-        else
-        {
-            //stopLoad();
-        }
     }
     
     function startLoading()
@@ -115,14 +90,10 @@
         
     }
     
-     function startLoadingSave()
-    {
+    function startLoadingSave(){
         $('[id$=savebtn]').attr("disabled", true);
         var ul = document.getElementById('el_loading');
-        ul.style.display = 'inline';       
-        // var obj= document.getElementById('savebtn');
-        //document.getElementById("savebtn").disabled = true;
-        // $('[$id=savebtn]').attr("disabled",true);
+        ul.style.display = 'inline';
     }
     
     function startLoadingAutoBilling()
@@ -139,7 +110,7 @@
     }   
     function submitOk()
     {
-      successfulSync();
+        successfulSync();
     }
     function submitSuccessfully()
     {
@@ -148,8 +119,6 @@
     }
     
     function DisableDelete(checkboxVal,Id){
-        console.log(checkboxVal);
-        
         if(checkboxVal){
             $('[id$=icon'+Id+']').css('pointer-events','none');
             $('[id$=icon'+Id+']').css('background-color','#808080');
@@ -356,11 +325,10 @@
                                             <apex:outputPanel rendered="{!showDialogBox}">
                                                 <div class="slds-modal__footer">
                                                     <button class="slds-button slds-button--brand" onClick="submitSuccessfully();return false;"> Confirm </button>
-                                                
+                                                    
                                                     <button class="slds-button slds-button--brand" onClick="submitOk();return false;"> Cancel</button>
                                                 </div>
                                             </apex:outputPanel>
-                                            
                                         </div>
                                     </div>
                                     <div class="slds-backdrop slds-backdrop--open"></div>
@@ -383,9 +351,8 @@
                                 <apex:actionFunction name="RemoveItem" action="{!RemoveItem}" reRender="multipleFound">    
                                     <apex:param assignTo="{!itemIndex}" value="" name="ItemIndex" />
                                 </apex:actionFunction>
-                                
                                 <apex:actionFunction name="RemoveAllStages" action="{!RemoveAllStages}" reRender="multipleFound">
-                               <apex:param assignTo="{!confirmed}" value="" name="Confirmed" />
+                                    <apex:param assignTo="{!confirmed}" value="" name="Confirmed" />
                                 </apex:actionFunction>
                                 <apex:actionFunction name="RemoveBilledItem" action="{!RemoveBilledItem}" reRender="multipleFound">    
                                     <apex:param assignTo="{!itemIndex}" value="" name="ItemIndex" />
@@ -399,36 +366,33 @@
                                         startLoading();
                                     }
                                     var multiplerror = {!multipleFoundError};
-                                        var multiplerrorNew = {!multipleFoundErrorNew};
+                                    var multiplerrorNew = {!multipleFoundErrorNew};
                                     var refreshPage = {!refreshInvoices};
                                     var reloadPageObj = {!reloadPageObj};
-
+                                    
                                     resetFlags();
                                     if(multiplerrorNew){
-                                         var r = confirm("Are you sure you want to delete the Invoices?"); 
+                                        var r = confirm("Are you sure you want to delete the Invoices?"); 
                                         if(r){
                                             //alert("Confirmed Delete");
                                             //RemoveAllStages(1);
                                             //stopLoad();
-                                           }
+                                        }
                                     }
                                     else if(multiplerror){
                                         alert("You cannot delete stage as billed invoices exist with multiple line items including this stage.");
                                         stopLoad();
                                     }
-                                    else if (refreshPage == false){
-                                        
-                                    }
-                                    else{
-                                        if(reloadPageObj){
-                                        }else{
-                                            alert('==Reached---');
-                                            reloadPage();
-                                        }                                       
-                                    }
+                                        else if (refreshPage == false){
+                                        }
+                                            else{
+                                                if(reloadPageObj){
+                                                }else{
+                                                    reloadPage();
+                                                }                                       
+                                            }
                                     </script>
                                 </apex:outputPanel>
-                                
                                 <div class="slds-page-header">
                                     <div class="slds-grid" style="width: 30%;display:  inline-block;">
                                         <div class="slds-col slds-has-flexi-truncate">
@@ -439,14 +403,13 @@
                                                     </svg>
                                                 </div>
                                                 <div class="slds-media__body">
-                                                   
                                                     <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="{!Opportunity.Name}">Fee Schedule</h1>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                       <div style="width: 15%;display:  inline-block;vertical-align: middle;text-align:  right;">
-                                            <apex:commandButton styleClass="slds-button slds-button--neutral" value="Delete All Stages" onclick="deleteAllStages({!numberOfSchedulers}); return false;"                                />
+                                    <div style="width: 15%;display:  inline-block;vertical-align: middle;text-align:  right;">
+                                        <apex:commandButton styleClass="slds-button slds-button--neutral" value="Delete All Stages" onclick="deleteAllStages({!numberOfSchedulers}); return false;"                                />
                                     </div>                        
                                     <div style="width: 47%;display:  inline-block;vertical-align: middle;text-align:  right;">
                                         <b>Next Scheduler Time Remaining : </b> 
@@ -456,11 +419,9 @@
                                 </div>
                                 <apex:outputPanel id="ren" >
                                     <script>
-                                    console.log("calledAgain");
                                     renderDelete();
                                     </script>
                                     <div style="overflow-y:scroll; height:28rem; ">
-                                        
                                         <table class="slds-table slds-table--bordered slds-table--cell-buffer" id="tableFeeSchedule">
                                             <thead>
                                                 <tr >
@@ -497,7 +458,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                
                                                 <apex:variable var="count" value="{!1}" />
                                                 <apex:variable var="feePerc" value="{!0}" />
                                                 <apex:variable var="fee" value="{!0}" />
@@ -505,12 +465,11 @@
                                                 <apex:variable var="billed" value="{!0}" />
                                                 <apex:repeat value="{!Invoices}" var="inv">
                                                     <tr id="{!count}">
-                                                       <th scope="row" data-label="Sr. No.">
+                                                        <th scope="row" data-label="Sr. No.">
                                                             {!count}
                                                         </th>
-                                                       <th scope="row" data-label="Stage">
+                                                        <th scope="row" data-label="Stage">
                                                             <div class="slds-truncate" title="{!inv.Name}">
-
                                                                 <apex:inputfield styleClass="slds-input" value="{!inv.Name}" />
                                                             </div>
                                                         </th>
@@ -550,10 +509,8 @@
                                                                 <apex:inputfield style="zoom: 2" html-data-id="checkboxInput{!count}" styleClass="slds-checkbox" value="{!inv.Locked__c}" onchange="DisableDelete(this.checked,'{!count}')"/>
                                                             </div>
                                                         </td>
-                                                        
                                                         <td data-label="Action">
                                                             <div class="slds-truncate">
-                                                                
                                                                 <apex:outputpanel title="Delete">
                                                                     <span Id="icon{!count}" style="padding:.3rem" class="slds-icon_container slds-icon-action-delete slds-icon_container--circle" data-reactid="139" onclick="deleteItem('{!inv.Id}', '{!count}', '{!inv.name}','{!inv.Billed__c}');">
                                                                         <svg style="width:1.2rem; height:1.2rem" class="slds-icon slds-icon--small" aria-hidden="true" data-reactid="140">
@@ -561,10 +518,7 @@
                                                                         </svg>
                                                                     </span>
                                                                 </apex:outputpanel>
-                                                                
-                                                                
                                                             </div>
-                                                            
                                                         </td>
                                                     </tr>
                                                     <apex:variable value="{!count+1}" var="count"/>
@@ -573,11 +527,8 @@
                                                     <apex:variable value="{!if(inv.Bill__c!=null,bill+(inv.Bill__c*inv.Fee__c)/100,bill+0)}" var="bill"/>
                                                     <apex:variable value="{!if(inv.Amount__c!=null,billed+inv.Amount__c,billed+0)}" var="billed"/>
                                                 </apex:repeat>
-                                                
-                                                
                                             </tbody>
                                         </table>
-                                        
                                     </div>
                                     <apex:outputPanel id="totals" >
                                         <div class="slds-docked-form-footer" >
@@ -642,57 +593,40 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                         
                                             <div style="width:95% ; padding-top:1%">   
-                                               
                                                 <div  style="display:  inline-block; float:left;padding-left:3%;width:50%">
-                                                    
-                                                <div style="display:  inline-block;vertical-align: middle;text-align:  ">   
-                                                    <p  style="display:  inline-block;" class="slds-line-height--reset">Start Date &nbsp;&nbsp;&nbsp;</p>
-                                                    <apex:input style="display:  inline-block;" type="date" value="{!startMonth}"  />
-                                                 </div>
-                                                <div style="display:  inline-block;padding-left:3%;vertical-align: middle;text-align:  ">                                                                                 
-                                                    <p   style="display:  inline-block;" class="slds-line-height--reset">Month(s)&nbsp;&nbsp;&nbsp;</p>
-                                                    <apex:selectList value="{!selectedVal}" size="1" style="display:inline-block;"> 
-                                                        <apex:selectOptions value="{!openPresentationOptions}" /> 
-                                                    </apex:selectList>
-                                                </div>
-                                                <div style="display:  inline-block;padding-left:3%;vertical-align: middle;text-align:  ">                                                                                 
-                                                    
-                                                    <apex:commandButton styleClass="slds-button slds-button--brand" value="Schedule Billing" action="{!runSchedule}" onclick="startLoading();" oncomplete="processLoading(); return false;"
-                                                                        />
-                                                </div>       
+                                                    <div style="display:  inline-block;vertical-align: middle;text-align:  ">   
+                                                        <p  style="display:  inline-block;" class="slds-line-height--reset">Start Date &nbsp;&nbsp;&nbsp;</p>
+                                                        <apex:input style="display:  inline-block;" type="date" value="{!startMonth}"  />
+                                                    </div>
+                                                    <div style="display:  inline-block;padding-left:3%;vertical-align: middle;text-align:  ">                                                                                 
+                                                        <p   style="display:  inline-block;" class="slds-line-height--reset">Month(s)&nbsp;&nbsp;&nbsp;</p>
+                                                        <apex:selectList value="{!selectedVal}" size="1" style="display:inline-block;"> 
+                                                            <apex:selectOptions value="{!openPresentationOptions}" /> 
+                                                        </apex:selectList>
+                                                    </div>
+                                                    <div style="display:  inline-block;padding-left:3%;vertical-align: middle;text-align:  ">                                                                                 
+                                                        <apex:commandButton styleClass="slds-button slds-button--brand" value="Schedule Billing" action="{!runSchedule}" onclick="startLoading();" oncomplete="processLoading(); return false;"
+                                                                            />
+                                                    </div>
                                                 </div>
                                                 <div style="display:  inline-block; float:right">
-
-                                                <apex:commandButton styleClass="slds-button slds-button--brand" value="Add Service" onclick="AddMore(); return false;"
-                                                                    />
-                                                <apex:commandButton styleClass="slds-button slds-button--brand" id="savebtn" value="Save" action="{!save}" onclick="startLoadingSave();" oncomplete="processLoading(); return false;"
-                                                                    />
-                                                <apex:commandButton styleClass="slds-button slds-button--neutral" value="Cancel" onclick="reloadPage(); return false;"
-                                                                    />
+                                                    <apex:commandButton styleClass="slds-button slds-button--brand" value="Add Service" onclick="AddMore(); return false;"
+                                                                        />
+                                                    <apex:commandButton styleClass="slds-button slds-button--brand" id="savebtn" value="Save" action="{!save}" onclick="startLoadingSave();" oncomplete="processLoading(); return false;"
+                                                                        />
+                                                    <apex:commandButton styleClass="slds-button slds-button--neutral" value="Cancel" onclick="reloadPage(); return false;"
+                                                                        />
                                                 </div>
                                             </div>
-                                        
                                         </div>
-                                        
                                     </apex:outputPanel>
-                                    
                                 </apex:outputPanel>
-                                
-                                
-                                
-                                
-                                
-                                
                             </apex:outputPanel>
                         </div>
-                        
                     </body>
-                    
                 </html>
             </apex:form>
         </apex:outputPanel>
-        
     </apex:pageBlock>
 </apex:page>

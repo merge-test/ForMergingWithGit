@@ -17,7 +17,7 @@ public class InvoiceController {
     public String startMonth {get;set;}
     public String selectedVal{get;set;}
     public Integer numberOfSchedulers {get;set;}
-    public Integer allowSave {get;set;}  
+    public Integer allowSave {get;set;}
     public class wrapperClass{
         Integer value;
         String str;
@@ -49,7 +49,7 @@ public class InvoiceController {
         multipleFoundError = false;
         multipleFoundErrorNew= false;
         oppId = ApexPages.currentPage().getParameters().get('id');
-        serviceCount =1;       
+        serviceCount = 1;       
         invoices = new list<Invoice__c>();
         List<Id>tmpInvIds = new List <Id>();
         fetchInvoices(oppId);
@@ -63,7 +63,7 @@ public class InvoiceController {
         numberOfSchedulers= lstFeeStorage.size();
     }
     
-    public List<Invoice__c> getInvoices(){
+    public List<Invoice__c> getInvoices() {
         return invoices;
     }
     
@@ -387,7 +387,7 @@ public class InvoiceController {
                 } 
             }
             if(wrong == 1){
-                wrap.result= false ;	
+                wrap.result= false ;    
             }
         }
         return wrap;
