@@ -49,7 +49,7 @@ public class InvoiceTriggerHandler {
             }
         }
     }
-        
+    
     public static void preventNullValues(List<Invoice__c> newInvoices){
         for(Invoice__c invoice : newInvoices){
             invoice.Fee__c = ((invoice.Fee__c == null)?0:invoice.Fee__c);
@@ -64,6 +64,10 @@ public class InvoiceTriggerHandler {
             if(invoice.Time_Frame__c == null ){
                 invoice.Time_Frame__c = '0';
             }
+            
+            if(invoice.Name.equals('Retainer')){
+                invoice.Time_Frame__c = '0';
+            }                
         }
     }
     
@@ -84,14 +88,14 @@ public class InvoiceTriggerHandler {
         
         Map<String,Boolean> duplicateCheckExisting = new Map<String,Boolean>();
         for(Invoice__c inv : [SELECT Id,Name,Opportunity__c FROM Invoice__c where Opportunity__c = :oppIds and Id != :invIds]){    
-                duplicateCheckExisting.put(inv.Opportunity__c+''+inv.Name,true);
+            duplicateCheckExisting.put(inv.Opportunity__c+''+inv.Name,true);
         }
         
         for(Invoice__c inv : newInvoices){
             if((duplicateCheckExisting != null && duplicateCheckExisting.get(inv.Opportunity__c+''+inv.Name) == true) || 
                (duplicateCheckNew != null && duplicateCheckNew.get(inv.Opportunity__c+''+inv.Name) == true)){
-                inv.addError('Stage with same name already exists.');
-            }
+                   inv.addError('Stage with same name already exists.');
+               }
         }
     }
     
@@ -146,22 +150,22 @@ public class InvoiceTriggerHandler {
             delays.retainerDelays = defaultInvoices.get('Retainer') != null ? (defaultInvoices.get('Retainer').Delays_Month__c):0;
             
             delays.schematicDelays = defaultInvoices.get('Schematic Design') != null ? ((defaultInvoices.get('Schematic Design').Delays_Month__c) + 
-                                                                                               (defaultInvoices.get('Schematic Design').Time_Frame__c == null?0: Integer.valueOf(defaultInvoices.get('Schematic Design').Time_Frame__c))):0;
+                                                                                        (defaultInvoices.get('Schematic Design').Time_Frame__c == null?0: Integer.valueOf(defaultInvoices.get('Schematic Design').Time_Frame__c))):0;
             
             delays.dobFilDelays = defaultInvoices.get('DOB Filing') != null ? ((defaultInvoices.get('DOB Filing').Delays_Month__c) + 
-                                                                                      (defaultInvoices.get('DOB Filing').Time_Frame__c == null?0: Integer.valueOf(defaultInvoices.get('DOB Filing').Time_Frame__c))):0;
+                                                                               (defaultInvoices.get('DOB Filing').Time_Frame__c == null?0: Integer.valueOf(defaultInvoices.get('DOB Filing').Time_Frame__c))):0;
             
             delays.dobAppDelays = defaultInvoices.get('DOB Approval') != null ? ((defaultInvoices.get('DOB Approval').Delays_Month__c) + 
-                                                                                        (defaultInvoices.get('DOB Approval').Time_Frame__c == null?0: Integer.valueOf(defaultInvoices.get('DOB Approval').Time_Frame__c))):0;
+                                                                                 (defaultInvoices.get('DOB Approval').Time_Frame__c == null?0: Integer.valueOf(defaultInvoices.get('DOB Approval').Time_Frame__c))):0;
             
             delays.bidDocsDelays = defaultInvoices.get('Bid Documents') != null ? ((defaultInvoices.get('Bid Documents').Delays_Month__c) + 
-                                                                                          (defaultInvoices.get('Bid Documents').Time_Frame__c == null?0: Integer.valueOf(defaultInvoices.get('Bid Documents').Time_Frame__c))):0;
-
+                                                                                   (defaultInvoices.get('Bid Documents').Time_Frame__c == null?0: Integer.valueOf(defaultInvoices.get('Bid Documents').Time_Frame__c))):0;
+            
             delays.constrAdminDelays = defaultInvoices.get('Construction Admin') != null ? ((defaultInvoices.get('Construction Admin').Delays_Month__c) + 
-                                                                                                   (defaultInvoices.get('Construction Admin').Time_Frame__c == null?0: Integer.valueOf(defaultInvoices.get('Construction Admin').Time_Frame__c))):0;
+                                                                                            (defaultInvoices.get('Construction Admin').Time_Frame__c == null?0: Integer.valueOf(defaultInvoices.get('Construction Admin').Time_Frame__c))):0;
             
             delays.punchDelays = defaultInvoices.get('Punchlist') != null ? ((defaultInvoices.get('Punchlist').Delays_Month__c) + 
-                                                                                    (defaultInvoices.get('Punchlist').Time_Frame__c == null?0: Integer.valueOf(defaultInvoices.get('Punchlist').Time_Frame__c))):0;
+                                                                             (defaultInvoices.get('Punchlist').Time_Frame__c == null?0: Integer.valueOf(defaultInvoices.get('Punchlist').Time_Frame__c))):0;
         }
         else{
             if(othersDefaultInvoices == null){
@@ -170,22 +174,22 @@ public class InvoiceTriggerHandler {
             delays.retainerDelays = othersDefaultInvoices.get('Retainer') != null ? (othersDefaultInvoices.get('Retainer').Delays_Month__c):0;
             
             delays.schematicDelays = othersDefaultInvoices.get('Schematic Design') != null ? ((othersDefaultInvoices.get('Schematic Design').Delays_Month__c) + 
-                                                                                                     (othersDefaultInvoices.get('Schematic Design').Time_Frame__c == null?0: Integer.valueOf(othersDefaultInvoices.get('Schematic Design').Time_Frame__c))):0;
+                                                                                              (othersDefaultInvoices.get('Schematic Design').Time_Frame__c == null?0: Integer.valueOf(othersDefaultInvoices.get('Schematic Design').Time_Frame__c))):0;
             
             delays.dobFilDelays = othersDefaultInvoices.get('DOB Filing') != null ? ((othersDefaultInvoices.get('DOB Filing').Delays_Month__c) + 
-                                                                                            (othersDefaultInvoices.get('DOB Filing').Time_Frame__c == null?0: Integer.valueOf(othersDefaultInvoices.get('DOB Filing').Time_Frame__c))):0;
+                                                                                     (othersDefaultInvoices.get('DOB Filing').Time_Frame__c == null?0: Integer.valueOf(othersDefaultInvoices.get('DOB Filing').Time_Frame__c))):0;
             
             delays.dobAppDelays = othersDefaultInvoices.get('DOB Approval') != null ? ((othersDefaultInvoices.get('DOB Approval').Delays_Month__c) + 
-                                                                                              (othersDefaultInvoices.get('DOB Approval').Time_Frame__c == null?0: Integer.valueOf(othersDefaultInvoices.get('DOB Approval').Time_Frame__c))):0;
+                                                                                       (othersDefaultInvoices.get('DOB Approval').Time_Frame__c == null?0: Integer.valueOf(othersDefaultInvoices.get('DOB Approval').Time_Frame__c))):0;
             
             delays.bidDocsDelays = othersDefaultInvoices.get('Bid Documents') != null ? ((othersDefaultInvoices.get('Bid Documents').Delays_Month__c) + 
-                                                                                                (othersDefaultInvoices.get('Bid Documents').Time_Frame__c == null?0: Integer.valueOf(othersDefaultInvoices.get('Bid Documents').Time_Frame__c))):0;
+                                                                                         (othersDefaultInvoices.get('Bid Documents').Time_Frame__c == null?0: Integer.valueOf(othersDefaultInvoices.get('Bid Documents').Time_Frame__c))):0;
             
             delays.constrAdminDelays = othersDefaultInvoices.get('Construction Admin') != null ? ((othersDefaultInvoices.get('Construction Admin').Delays_Month__c) + 
-                                                                                                         (othersDefaultInvoices.get('Construction Admin').Time_Frame__c == null?0: Integer.valueOf(othersDefaultInvoices.get('Construction Admin').Time_Frame__c))):0;
+                                                                                                  (othersDefaultInvoices.get('Construction Admin').Time_Frame__c == null?0: Integer.valueOf(othersDefaultInvoices.get('Construction Admin').Time_Frame__c))):0;
             
             delays.punchDelays = othersDefaultInvoices.get('Punchlist') != null ? ((othersDefaultInvoices.get('Punchlist').Delays_Month__c) + 
-                                                                                          (othersDefaultInvoices.get('Punchlist').Time_Frame__c == null?0: Integer.valueOf(othersDefaultInvoices.get('Punchlist').Time_Frame__c))):0;
+                                                                                   (othersDefaultInvoices.get('Punchlist').Time_Frame__c == null?0: Integer.valueOf(othersDefaultInvoices.get('Punchlist').Time_Frame__c))):0;
         }
         return delays;
     }
@@ -212,7 +216,7 @@ public class InvoiceTriggerHandler {
         
         delays.constrAdminDelays = defaultInvoices.get('Construction AdminDefault') != null ? ((defaultInvoices.get('Construction AdminDefault').Delays_Month__c) + 
                                                                                                (defaultInvoices.get('Construction AdminDefault').Time_Frame__c == null?0: Integer.valueOf(defaultInvoices.get('Construction AdminDefault').Time_Frame__c))):0;
-
+        
         delays.punchDelays = defaultInvoices.get('PunchlistDefault') != null ? ((defaultInvoices.get('PunchlistDefault').Delays_Month__c) + 
                                                                                 (defaultInvoices.get('PunchlistDefault').Time_Frame__c == null?0: Integer.valueOf(defaultInvoices.get('PunchlistDefault').Time_Frame__c))):0;
         return delays;
@@ -369,10 +373,10 @@ public class InvoiceTriggerHandler {
                 }
             }
         }
-
+        
         Map<Id,Opportunity> relatedOpportunities = new Map<Id,Opportunity>([Select Id,CloseDate,TF_SD__c, TF_DOB_Filing__c, TF_DOB_App__c, TF_DD_CD__c,
                                                                             TF_CA__c, TF_Punch__c from Opportunity where Id = :oppIds]);
-
+        
         setBillingDateOnUpdate(impactedInvoiceIds, toUpdateInvoices, relatedOpportunities, allInvoices);
         if(toUpdateInvoices.size() > 0){
             Map<Id,Date> schedulerData = new Map<Id,Date>();
@@ -472,10 +476,20 @@ public class InvoiceTriggerHandler {
     public static void adjustBilledPercentages(List<Invoice__c> newInvoices,Map<Id,Invoice__c> oldInvoices){
         for(Invoice__c inv : newInvoices){
             if(inv.Fee__c != oldInvoices.get(inv.Id).Fee__c){
-                Decimal oldBilledAmount = (inv.Billed__c / 100) * oldInvoices.get(inv.Id).Fee__c;
-                inv.Billed__c = (oldBilledAmount / inv.Fee__c) * 100;
-                if(inv.Billed__c > 100){
-                    inv.addError('InvoiceTriggerHandler billed percentage Error ='+inv.Name + ' : Billed percentage exceeded from 100%. Please adjust the Opportunity Amout accordingly.');
+                if(inv.Fee__c!=0){
+                    Decimal oldBilledAmount = (inv.Billed__c / 100) * oldInvoices.get(inv.Id).Fee__c;
+                    inv.Billed__c = (oldBilledAmount / inv.Fee__c) * 100;
+                    if(inv.Billed__c > 100){
+                        inv.addError('InvoiceTriggerHandler billed percentage Error ='+inv.Name + ' : Billed percentage exceeded from 100%. Please adjust the Opportunity Amout accordingly.');
+                    }
+                }
+                else{
+                    if(inv.Billed__c > 0){
+                        inv.addError('InvoiceTriggerHandler billed percentage Error ='+inv.Name + ' : Fee of a Billed Stage cannot be 0.');            
+                    }
+                    else{
+                        inv.Billed__c = 0;                        
+                    }
                 }
             }
         }

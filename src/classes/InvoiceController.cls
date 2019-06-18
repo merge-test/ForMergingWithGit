@@ -18,6 +18,7 @@ public class InvoiceController {
     public String selectedVal{get;set;}
     public Integer numberOfSchedulers {get;set;}
     public Integer allowSave {get;set;}
+    
     public class wrapperClass{
         Integer value;
         String str;
@@ -156,7 +157,7 @@ public class InvoiceController {
         for(Invoice__c inv :lst_inv){
             lst_InvId.add(inv.id);
         } 
-        List <Invoice_Sync__c> lst_invoiceSync=new List <Invoice_Sync__c>([Select Name,QB_Id__c,Invoice__c,Amount__c,PO__c from Invoice_Sync__c where Invoice__c  IN:lst_InvId]);
+        List <Invoice_Sync__c> lst_invoiceSync=new List <Invoice_Sync__c>([Select Name,QB_Id__c,Invoice__c,Amount__c from Invoice_Sync__c where Invoice__c  IN:lst_InvId]);
         Map <Id,List<String>> mapInvoiceQB = new Map <Id, List <String>>();
         for(Invoice_Sync__c invObj:lst_invoiceSync){
             if(mapInvoiceQB.get(invObj.Invoice__c) != null){
@@ -335,7 +336,7 @@ public class InvoiceController {
     public wrapperClass checkMultipleLineItems(  List<String> lst_QBid, Id invoiceId,Integer isBulkDelete){
         List<String> lstQbIdAll = new List <String>();
         Map <String,id> map_QbidToInvoiceId = new Map <String,id>();
-        List <Invoice_Sync__c> lst_invoiceSync=new List <Invoice_Sync__c>([Select Name,QB_Id__c,Invoice__c,Amount__c,PO__c from Invoice_Sync__c where QB_Id__c =:lst_QBid]);
+        List <Invoice_Sync__c> lst_invoiceSync=new List <Invoice_Sync__c>([Select Name,QB_Id__c,Invoice__c,Amount__c from Invoice_Sync__c where QB_Id__c =:lst_QBid]);
         for(Invoice_Sync__c invObj:lst_invoiceSync){
             lstQbIdAll.add(invObj.QB_Id__c);
             map_QbidToInvoiceId.put(invObj.QB_Id__c,invObj.Invoice__c);
@@ -353,7 +354,7 @@ public class InvoiceController {
         wrap.result= true ;
         wrap.mapUniqueName = new Map <String,String>();
         Set <String> set_str = new Set<String>();
-        List <Invoice_Sync__c> lst_invoiceSyncUpdated=new List <Invoice_Sync__c>([Select Name,QB_Id__c,Invoice__r.Name,Invoice__r.Locked__c,Invoice__c,Amount__c,PO__c from Invoice_Sync__c where QB_Id__c =:lst_ActiveQBid]);
+        List <Invoice_Sync__c> lst_invoiceSyncUpdated=new List <Invoice_Sync__c>([Select Name,QB_Id__c,Invoice__r.Name,Invoice__r.Locked__c,Invoice__c,Amount__c from Invoice_Sync__c where QB_Id__c =:lst_ActiveQBid]);
         List <ContentVersion> lst_ContentVersionActive =new List <ContentVersion> ([SELECT QB_Id__c, Id, Title FROM ContentVersion where QB_Id__c IN:lst_ActiveQBid]);
         Map <String,String> mapQbIdTitle = new Map <String,String>();
         for(ContentVersion cv:lst_ContentVersionActive){
@@ -387,7 +388,7 @@ public class InvoiceController {
                 } 
             }
             if(wrong == 1){
-                wrap.result= false ;    
+                wrap.result= false ;	
             }
         }
         return wrap;
@@ -398,7 +399,7 @@ public class InvoiceController {
         if(inv.Id!=null){
             List <FeeStorage__c> lstFeeStorage = [Select id from FeeStorage__c where Invoice__c =:inv.id];
             if(lstFeeStorage.size() == 0 ){                
-                List <Invoice_Sync__c> lst_invoiceSync=new List <Invoice_Sync__c>([Select Name,QB_Id__c,Invoice__c,Amount__c,PO__c from Invoice_Sync__c where Invoice__c =:inv.Id]);
+                List <Invoice_Sync__c> lst_invoiceSync=new List <Invoice_Sync__c>([Select Name,QB_Id__c,Invoice__c,Amount__c from Invoice_Sync__c where Invoice__c =:inv.Id]);
                 List<String> lst_QBid = new List <String>();
                 for(Invoice_Sync__c invObj:lst_invoiceSync){
                     lst_QBid.add(invObj.QB_Id__c);
@@ -504,7 +505,36 @@ public class InvoiceController {
                 popUpHeading = 'Error!';
                 allowSave = 1;
                 return null;
-            }            
+            }      
+            if(inv.Fee__c < 0){
+                userMessage = 'Fee($) cannot be negative.';
+                popUpHeading = 'Error!';
+                allowSave = 1;
+                return null;
+            }      
+            if(inv.Delays_Month__c < 0){
+                userMessage = 'Delays cannot be negative.';
+                popUpHeading = 'Error!';
+                allowSave = 1;
+                return null;
+            }    
+            if(!inv.Name.equals('Retainer')){                               
+                try{
+                    Integer val =   Integer.ValueOf(inv.Time_Frame__c);
+                    if(val<0){
+                        userMessage = 'Time Frame value cannot be negative.';
+                        popUpHeading = 'Error!';
+                        allowSave = 1;
+                        return null;
+                    }
+                }
+                catch (Exception ex){
+                        userMessage = 'Time Frame value can only be valid Integer value';
+                        popUpHeading = 'Error!';
+                        allowSave = 1;
+                        return null;
+                }                
+            }
             if(inv.Bill__c!=0)
             {
                 if(inv.Fee__c > 0){
@@ -533,6 +563,14 @@ public class InvoiceController {
             else if(e.getMessage().contains('Billed Invoices exist. Stage cannot be renamed.')){
                 userMessage = 'Billed Invoices exist. Stage cannot be renamed.';
                 popUpHeading = 'Error!';                
+            }
+            else if(e.getMessage().contains('System.TypeException: Invalid integer')){
+                userMessage = e.getTypeName();
+                popUpHeading = 'Error!';                
+            }
+            else if(e.getMessage().contains('Fee of a Billed Stage cannot be 0.')){
+                userMessage = 'Fee of a Billed Stage cannot be 0.';
+                popUpHeading = 'Error!';
             }
             else{
                 userMessage = 'Some unexpected error occured. Please contact your administrator for further information.';
@@ -610,6 +648,41 @@ public class InvoiceController {
                 popUpHeading = 'Error!';
                 return null;
             } 
+            if(inv.Bill__c < 0){
+                userMessage = 'Bill(%) cannot be negative.';
+                popUpHeading = 'Error!';
+                allowSave = 1;
+                return null;
+            }    
+            if(inv.Fee__c < 0){
+                userMessage = 'Fee($) cannot be negative.';
+                popUpHeading = 'Error!';
+                allowSave = 1;
+                return null;
+            }      
+            if(inv.Delays_Month__c < 0){
+                userMessage = 'Delays cannot be negative.';
+                popUpHeading = 'Error!';
+                allowSave = 1;
+                return null;
+            }    
+            if(!inv.Name.equals('Retainer')){                               
+                try{
+                    Integer val =   Integer.ValueOf(inv.Time_Frame__c);
+                    if(val<0){
+                        userMessage = 'Time Frame value cannot be negative.';
+                        popUpHeading = 'Error!';
+                        allowSave = 1;
+                        return null;
+                    }
+                }
+                catch (Exception ex){
+                        userMessage = 'Time Frame value can only be valid Integer value';
+                        popUpHeading = 'Error!';
+                        allowSave = 1;
+                        return null;
+                }                
+            }
             if(inv.Bill__c!=0){
                 if(inv.Fee__c > 0){
                     userMessage ='Your request to generate invoice has been initiated. You will be notified by email in case of issue.';
@@ -644,6 +717,14 @@ public class InvoiceController {
             }
             else if(e.getMessage().contains('Billed Invoices exist. Stage cannot be renamed.')){
                 userMessage = 'Billed Invoices exist. Stage cannot be renamed.';
+                popUpHeading = 'Error!';
+            }
+            else if(e.getMessage().contains('System.TypeException: Invalid integer')){
+                userMessage = e.getTypeName();
+                popUpHeading = 'Error!';                
+            }
+            else if(e.getMessage().contains('Fee of a Billed Stage cannot be 0.')){
+                userMessage = 'Fee of a Billed Stage cannot be 0.';
                 popUpHeading = 'Error!';
             }
             else{
@@ -739,7 +820,7 @@ public class InvoiceController {
         }
         return dt;        
     }
-    
+
     public PageReference invoiceBillStatus(){
         fetchInvoices(oppId);
         for(Invoice__c inv:invoices){
@@ -750,29 +831,29 @@ public class InvoiceController {
         syncStatus = true;
         return null;
     }
-    
+
     public PageReference returnPage(){
         PageReference cpage = new PageReference('/apex/Invoice?id='+oppId);
         cpage.setRedirect(true);
         return cpage;
     }
-    
+
     public PageReference RefreshWindow(){
         PageReference reference = new PageReference('/'+oppId);
         reference.setRedirect(true);
         return reference;
     }
-    
+
     public void resetFlags(){
         multipleFoundErrorNew= false;
         multipleFoundError = false;
         refreshInvoices = false;
     }
-    
+
     public Boolean getShowDialogue() {
         return syncStatus; 
     }
-    
+   
     public Boolean getshowDialogBox() {
         return showDialogBox; 
     }
@@ -782,7 +863,7 @@ public class InvoiceController {
         syncStatus = false;
         return null;
     }
-    
+   
     public Boolean getIsEnabled() {
         return enablePoll; 
     }
