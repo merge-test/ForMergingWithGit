@@ -1,0 +1,481 @@
+<apex:page controller="IssuedInvoiceReportController" showHeader="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" id="pg"  SIdebar="false" >
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.js">
+    </script>
+    
+    <style>
+        
+        .hideDropdown select{
+        display: none !important;
+        background-color: #fff;
+        color: #16325c;
+        border: 1px solid #d8dde6;
+        border-radius: .25rem;
+        width: 100%;
+        transition: border .1s linear,background-color .1s linear;
+        display: inline-block;
+        padding: 0 1rem 0 .75rem;
+        line-height: 1.875rem;
+        min-height: calc(1.875rem + (1px * 2));
+        }
+        
+        .hideDropdown input{
+        background-color: #fff;
+        color: #16325c;
+        border: 1px solid #d8dde6;
+        border-radius: .25rem;
+        width: 85%;
+        transition: border .1s linear,background-color .1s linear;
+        display: inline-block;
+        padding: 0 1rem 0 .75rem;
+        line-height: 1.875rem;
+        min-height: calc(1.875rem + (1px * 2));
+        }
+        
+        .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        opacity: 1;
+        transition: opacity 0.6s;
+        margin-bottom: 15px;
+        text-align: center;
+        font-size: 15px;
+        }
+        .alert.success {background-color: #4CAF50;}
+        .alert.info {background-color: #2196F3;}
+        .alert.warning {background-color: #ff9800;}
+        
+        .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+        }
+        
+        .closebtn:hover {
+        color: black;
+        }
+        
+        .credebt .slds-docked-form-footer{
+        display:unset;
+        position:absolute;
+        }
+        
+        .credebt .slds-table        {
+        background-color:unset;
+        table-layout:fixed;
+        }
+        
+        div.message{
+        position: fixed;
+        z-index: 500;
+        left: 40%;
+        }
+        
+        body .secondaryPalette.bPageBlock{
+        border-top: none;
+        background-color: unset !important;
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
+        }
+        
+        .apexp .bPageBlock.apexDefaultPageBlock .pbBody{
+        margin:0 !important;
+        }
+        
+        td div .errorMsg{
+        display:none;
+        
+        }
+        .pbBody{
+        color:#16325c;
+        }
+    </style>
+    
+    <apex:pagemessages />
+    <apex:pageBlock >
+        <apex:outputPanel >
+            
+            
+            <apex:form id="frm"> 
+                <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+                    
+                    <head>
+                        <meta charset="utf-8" />
+                        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1" />
+                        
+                        
+                        <apex:stylesheet value="{!URLFOR($Resource.SLDS, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+                        
+                    </head>
+                    
+                    <body>
+                        <div class="credebt">
+                            
+                            <div class="slds-spinner_container" id="slds_spinner" style="display:none;">
+                                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                                    <span class="slds-assistive-text">Loading</span>
+                                    <div class="slds-spinner__dot-a"></div>
+                                    <div class="slds-spinner__dot-b"></div>
+                                </div>
+                            </div>
+                            
+                            <apex:outputPanel >
+                                
+                                <div id="notification" class="alert" style="display: none;">
+                                    <span class="closebtn"><a title="dismiss this notification" onlick="$('#notification').hide();" >x</a></span>
+                                    <div id="alertmsg"> </div>
+                                </div>
+                                
+                                <div class="slds-page-header">
+                                    <div class="slds-grid">
+                                        <div class="slds-col slds-has-flexi-truncate">
+                                            <div class="slds-media slds-no-space slds-grow">
+                                                <div class="slds-media__figure">
+                                                    <svg class="slds-icon slds-icon-standard-user" aria-hidden="true">
+                                                        <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#user"></use>
+                                                    </svg>
+                                                </div>
+                                                <div class="slds-media__body">
+                                                    <p class="slds-text-title--caps slds-line-height--reset">Report</p>
+                                                    <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="this should match the Record Title">Opportunities with Issued Invoices</h1>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <apex:outputPanel id="ren" >
+                                    <div style="overflow-y:hidden; ">
+                                        
+                                        <table class="slds-table slds-table--bordered slds-table--cell-buffer" >
+                                            <thead>
+                                                <tr class="slds-text-title--caps slds-app-launcher__header">
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Name">Opportunity Name</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="S. No.">Sr. No.</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Issued Invoice Number">Issued Invoice Number</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Days Outstanding">0-30 Days old</div>
+                                                    </th>                                                    
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Days Outstanding">31-60 Days old</div>
+                                                    </th>                                                    
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Days Outstanding">61-90 Days old</div>
+                                                    </th>                                                    
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Days Outstanding">91-120 Days old</div>
+                                                    </th>                                                    
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Days Outstanding">>120 Days old</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Amount">Amount</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Invoice">Invoice</div>
+                                                    </th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td scope="row" data-label="Name">                                                        
+                                                    </td>
+                                                    <td scope="row" data-label="Name">                                                        
+                                                    </td>
+                                                    <td scope="row" data-label="Name">                                                        
+                                                    </td>
+                                                    <td scope="row" data-label="Name">
+                                                        <b>
+                                                            <apex:outputText value="{0, number, ###,##0.00}">
+                                                                $<apex:param value="{!category030}" />
+                                                            </apex:outputText>
+                                                        </b>                                                        
+                                                    </td>
+                                                    <td scope="row" data-label="Name">
+                                                        <b>
+                                                            <apex:outputText value="{0, number, ###,##0.00}">
+                                                                $<apex:param value="{!category3160}" />
+                                                            </apex:outputText>
+                                                        </b> 
+                                                    </td>
+                                                    <td scope="row" data-label="Name">
+                                                        <b>
+                                                            <apex:outputText value="{0, number, ###,##0.00}">
+                                                                $<apex:param value="{!category6190}" />
+                                                            </apex:outputText>
+                                                        </b> 
+                                                    </td>
+                                                    <td scope="row" data-label="Name">
+                                                        <b>
+                                                            <apex:outputText value="{0, number, ###,##0.00}">
+                                                                $<apex:param value="{!category91120}" />
+                                                            </apex:outputText>
+                                                        </b> 
+                                                    </td>
+                                                    <td scope="row" data-label="Name">
+                                                        <b>
+                                                            <apex:outputText value="{0, number, ###,##0.00}">
+                                                                $<apex:param value="{!categoryGt120}" />
+                                                            </apex:outputText>
+                                                        </b> 
+                                                    </td>                                                        
+                                                    <td scope="row" data-label="Name">
+                                                        <b>
+                                                            <apex:outputText value="{0, number, ###,##0.00}">
+                                                                $<apex:param value="{!category030+category3160+category6190+category91120+categoryGt120}" />
+                                                            </apex:outputText>
+                                                        </b> 
+                                                    </td>
+                                                    <td scope="row" data-label="Name">                                                        
+                                                    </td>
+                                                </tr>
+                                                
+                                                <apex:repeat value="{!contactAccountMap}" var="pm">
+                                                    <apex:variable var="Sum030PM" value="{!0}" />
+                                                    <apex:variable var="Sum3160PM" value="{!0}" />
+                                                    <apex:variable var="Sum6190PM" value="{!0}" />
+                                                    <apex:variable var="Sum91120PM" value="{!0}" />
+                                                    <apex:variable var="Sum121GtPM" value="{!0}" />
+                                                    <apex:variable var="TotalAmntPM" value="{!0}" />
+                                                    <apex:repeat value="{!contactAccountMap[pm]}" var="acc">
+                                                        <apex:repeat value="{!accountOppMap[acc]}" var="opp">
+                                                            <apex:repeat value="{!oppInvoiceMapp[opp]}" var="inv">
+                                                                <apex:variable var="Sum030PM" value="{!IF(inv.Days_Outstanding__c == '0-30', inv.Amount__c+Sum030PM,Sum030PM)}"/>
+                                                                <apex:variable var="Sum3160PM" value="{!IF(inv.Days_Outstanding__c == '31-60', inv.Amount__c+Sum3160PM, Sum3160PM)}"/>
+                                                                <apex:variable var="Sum6190PM" value="{!IF(inv.Days_Outstanding__c == '61-90', inv.Amount__c+Sum6190PM, Sum6190PM)}"/>
+                                                                <apex:variable var="Sum91120PM" value="{!IF(inv.Days_Outstanding__c == '91-120', inv.Amount__c+Sum91120PM, Sum91120PM)}"/>
+                                                                <apex:variable var="Sum121GtPM" value="{!IF(AND(inv.Days_Outstanding__c != '0-30',AND(inv.Days_Outstanding__c != '31-60',AND(inv.Days_Outstanding__c != '61-90',inv.Days_Outstanding__c != '91-120'))), inv.Amount__c+Sum121GtPM,Sum121GtPM)}"/>
+                                                                <apex:variable var="TotalAmntPM" value="{!inv.Amount__c+TotalAmntPM}"/>
+                                                                
+                                                            </apex:repeat>
+                                                        </apex:repeat>
+                                                    </apex:repeat>
+                                                    <tr style="background-color:#d5ddf3">
+                                                        <td scope="row" data-label="Name" colspan="3">
+                                                            
+                                                            <apex:outputText value="{!pm}" escape="false"/> 
+                                                        </td>
+                                                        <td>
+                                                                <b>
+                                                                    <apex:outputText value="{0, number, ###,##0.00}" >
+                                                                        $<apex:param value="{!Sum030PM}"/>
+                                                                    </apex:outputText>
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <b>
+                                                                    <apex:outputText value="{0, number, ###,##0.00}">
+                                                                        $<apex:param value="{!Sum3160PM}"/>
+                                                                    </apex:outputText>
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <b>
+                                                                    <apex:outputText value="{0, number, ###,##0.00}">
+                                                                        $<apex:param value="{!Sum6190PM}"/>
+                                                                    </apex:outputText>
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <b>
+                                                                    <apex:outputText value="{0, number, ###,##0.00}">
+                                                                        $<apex:param value="{!Sum91120PM}"/>
+                                                                    </apex:outputText>
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <b>
+                                                                    <apex:outputText value="{0, number, ###,##0.00}">
+                                                                        $<apex:param value="{!Sum121GtPM}"/>
+                                                                    </apex:outputText>
+                                                                </b>
+                                                            </td>
+                                                            <td  colspan="2">
+                                                                <b>
+                                                                    <apex:outputText value="{0, number, ###,##0.00}">
+                                                                        $<apex:param value="{!TotalAmntPM}"/>
+                                                                    </apex:outputText>
+                                                                </b>
+                                                            </td>
+                                                    </tr>
+                                                    
+                                                    <apex:repeat value="{!contactAccountMap[pm]}" var="acc">
+                                                        <tr style="background-color:#eff4fc">
+                                                            <td scope="row" data-label="Name" colspan="3">
+                                                                <apex:variable var="justCounter" value="{!0}"/>
+                                                                <apex:repeat value="{!accountOppMap[acc]}" var="cnter">
+                                                                    <apex:variable var="justCounter" value="{!justCounter+1}"/>
+                                                                </apex:repeat>
+                                                                <apex:variable var="Sum030" value="{!0}" />
+                                                                <apex:variable var="Sum3160" value="{!0}" />
+                                                                <apex:variable var="Sum6190" value="{!0}" />
+                                                                <apex:variable var="Sum91120" value="{!0}" />
+                                                                <apex:variable var="Sum121Gt" value="{!0}" />
+                                                                <apex:variable var="TotalAmnt" value="{!0}" />
+                                                                <apex:repeat value="{!accountOppMap[acc]}" var="opp">
+                                                                    <apex:repeat value="{!oppInvoiceMapp[opp]}" var="inv">
+                                                                        <apex:variable var="Sum030" value="{!IF(inv.Days_Outstanding__c == '0-30', inv.Amount__c+Sum030,Sum030)}"/>
+                                                                        <apex:variable var="Sum3160" value="{!IF(inv.Days_Outstanding__c == '31-60', inv.Amount__c+Sum3160, Sum3160)}"/>
+                                                                        <apex:variable var="Sum6190" value="{!IF(inv.Days_Outstanding__c == '61-90', inv.Amount__c+Sum6190, Sum6190)}"/>
+                                                                        <apex:variable var="Sum91120" value="{!IF(inv.Days_Outstanding__c == '91-120', inv.Amount__c+Sum91120, Sum91120)}"/>
+                                                                        <apex:variable var="Sum121Gt" value="{!IF(AND(inv.Days_Outstanding__c != '0-30',AND(inv.Days_Outstanding__c != '31-60',AND(inv.Days_Outstanding__c != '61-90',inv.Days_Outstanding__c != '91-120'))), inv.Amount__c+Sum121Gt,Sum121Gt)}"/>
+                                                                    <apex:variable var="TotalAmnt" value="{!inv.Amount__c+TotalAmnt}"/>
+                                                                        
+                                                                    </apex:repeat>
+                                                                </apex:repeat>
+                                                                <apex:outputText value="{!acc}" escape="false"/> <b> ({!justCounter} {!IF(justCounter>1, ' records',' record')}) </b>
+                                                            </td>
+                                                            <td>
+                                                                <b>
+                                                                    <apex:outputText value="{0, number, ###,##0.00}" >
+                                                                        $<apex:param value="{!Sum030}"/>
+                                                                    </apex:outputText>
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <b>
+                                                                    <apex:outputText value="{0, number, ###,##0.00}">
+                                                                        $<apex:param value="{!Sum3160}"/>
+                                                                    </apex:outputText>
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <b>
+                                                                    <apex:outputText value="{0, number, ###,##0.00}">
+                                                                        $<apex:param value="{!Sum6190}"/>
+                                                                    </apex:outputText>
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <b>
+                                                                    <apex:outputText value="{0, number, ###,##0.00}">
+                                                                        $<apex:param value="{!Sum91120}"/>
+                                                                    </apex:outputText>
+                                                                </b>
+                                                            </td>
+                                                            <td>
+                                                                <b>
+                                                                    <apex:outputText value="{0, number, ###,##0.00}">
+                                                                        $<apex:param value="{!Sum121Gt}"/>
+                                                                    </apex:outputText>
+                                                                </b>
+                                                            </td>
+                                                            <td  colspan="2">
+                                                                <b>
+                                                                    <apex:outputText value="{0, number, ###,##0.00}">
+                                                                        $<apex:param value="{!TotalAmnt}"/>
+                                                                    </apex:outputText>
+                                                                </b>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                        <apex:repeat value="{!accountOppMap[acc]}" var="opp">
+                                                            <tr>
+                                                                <td scope="row" data-label="Name" colspan="10">
+                                                                    <apex:outputText value="{!opp}" escape="false"/> 
+                                                                </td>
+                                                            </tr>
+                                                            <apex:variable var="count" value="{!1}" />
+                                                            <apex:variable var="AmountSum" value="{!0}" />
+                                                            
+                                                            <apex:repeat value="{!oppInvoiceMapp[opp]}" var="inv"> 
+                                                                <tr>
+                                                                    <th data-label="Name">
+                                                                    </th>
+                                                                    <th scope="row" data-label="Sr. No.">
+                                                                        {!count}
+                                                                    </th>
+                                                                    <th scope="row" data-label="Issued Invoice Number">
+                                                                        <div class="slds-truncate" title="{!inv.title}">
+                                                                            <apex:outputfield styleClass="slds-input" value="{!inv.title}" />
+                                                                            
+                                                                        </div>
+                                                                    </th>
+                                                                    <th scope="row" data-label="Days Outstanding">
+                                                                        <div class="slds-truncate" title="{!inv.Days_Outstanding__c}">
+                                                                            <apex:outputText value="{0, number, ###,##0.00}">
+                                                                                $<apex:param value="{!IF(inv.Days_Outstanding__c == '0-30',inv.Amount__c, 0.00)}"/>
+                                                                            </apex:outputText>
+                                                                        </div>
+                                                                    </th>
+                                                                    <th scope="row" data-label="Days Outstanding">
+                                                                        <div class="slds-truncate" title="{!inv.Days_Outstanding__c}">
+                                                                            <apex:outputText value="{0, number, ###,##0.00}">
+                                                                                $<apex:param value="{!IF(inv.Days_Outstanding__c == '31-60',inv.Amount__c, 0.00)}"/>
+                                                                            </apex:outputText>
+                                                                        </div>
+                                                                    </th>
+                                                                    <th scope="row" data-label="Days Outstanding">
+                                                                        <div class="slds-truncate" title="{!inv.Days_Outstanding__c}">
+                                                                            <apex:outputText value="{0, number, ###,##0.00}">
+                                                                                $<apex:param value="{!IF(inv.Days_Outstanding__c == '61-90',inv.Amount__c, 0.00)}"/>
+                                                                            </apex:outputText>
+                                                                        </div>
+                                                                    </th>
+                                                                    <th scope="row" data-label="Days Outstanding">
+                                                                        <div class="slds-truncate" title="{!inv.Days_Outstanding__c}">
+                                                                            <apex:outputText value="{0, number, ###,##0.00}">
+                                                                                $<apex:param value="{!IF(inv.Days_Outstanding__c == '91-120',inv.Amount__c, 0.00)}"/>
+                                                                            </apex:outputText>
+                                                                            
+                                                                        </div>
+                                                                    </th>
+                                                                    <th scope="row" data-label="Days Outstanding">
+                                                                        <div class="slds-truncate" title="{!inv.Days_Outstanding__c}">
+                                                                            <apex:outputText value="{0, number, ###,##0.00}">
+                                                                                $<apex:param value="{!IF(AND(inv.Days_Outstanding__c != '0-30',AND(inv.Days_Outstanding__c != '31-60',AND(inv.Days_Outstanding__c != '61-90',inv.Days_Outstanding__c != '91-120'))),inv.Amount__c, 0.00)}"/>
+                                                                            </apex:outputText>
+                                                                        </div>
+                                                                    </th>
+                                                                    <td data-label="Amount">
+                                                                        <div class="slds-truncate" title="{!inv.Amount__c}">
+                                                                            <apex:outputText value="{0, number, ###,##0.00}">
+                                                                                $<apex:param value="{!inv.Amount__c}"/>
+                                                                            </apex:outputText>
+                                                                        </div>
+                                                                    </td>
+                                                                    
+                                                                    <td data-label="Invoice">        
+                                                                        <div class="slds-truncate" title="{!inv.ContentDocumentId}">
+                                                                            <apex:outputLink value="{!$Label.Salesforce_Url}/{!inv.ContentDocumentId}" target="blank">View</apex:outputLink> 
+                                                                        </div>
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                <apex:variable value="{!count+1}" var="count"/>                                                        
+                                                            </apex:repeat>
+                                                            
+                                                        </apex:repeat>
+                                                        
+                                                    </apex:repeat>
+                                                </apex:repeat>
+                                            </tbody>
+                                            
+                                        </table>
+                                    </div>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </div>
+                    </body>
+                    
+                </html>
+            </apex:form>
+        </apex:outputPanel>
+        
+    </apex:pageBlock>
+</apex:page>

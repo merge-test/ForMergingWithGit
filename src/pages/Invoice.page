@@ -1,0 +1,698 @@
+<apex:page standardController="Opportunity" extensions="InvoiceController" showHeader="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" id="pg"  SIdebar="false" >
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.js">
+    </script>
+    
+    <script  type="text/javascript">
+    $('document').ready(function(){
+        renderDelete();
+        displayRemainingTime();
+    });
+    
+    function renderDelete(){
+        var json = '{!Invoices }';
+        json = json.replace('[', '').replace(']', '');
+        var ids = json.split(',');
+        console.log(ids.length);
+        for(var i=1; i <= ids.length ; i++){
+            DisableDelete($('[id$=checkbox'+i+']').children('input').prop('checked'),i);
+        }
+    }
+    
+    function reloadPage() {
+        window.top.location.href = '/{!oppId}';                 
+    }
+    
+    
+    function RedirectToAutoBilling(){
+        
+        //       window.top.location.href = '/apex/feeSchedule?id={!oppId}';   
+        window.open("/apex/feeSchedule?id={!oppId}","_blank");
+        
+    }
+    function refresh(){
+        refreshTable();
+    }
+    
+    function actionFun()
+    {
+        fun1();
+    }
+    
+    function deleteItem(recId, count, stagename,billed)
+    {
+        $("span.slds-icon-action-delete").css("pointer-events", "none");
+        if(billed<=0){
+            
+            var r = confirm("Are you sure you want to delete this stage?");
+            if (r == true) {
+                startLoading();
+                RemoveItem(count);
+            } 
+            
+        }
+        else{
+            var r = confirm("Are you sure you want to delete this stage?");
+            if (r == true) {
+                startLoading();
+                RemoveBilledItem(count);
+            }     
+        }
+        $("span.slds-icon-action-delete").css("pointer-events", "auto");
+    }
+    
+    
+    function deleteAllStages(schedulerCount)
+    {
+     	/*var totalRowCount = 0;
+        var rowCount = 0;
+        var table = document.getElementById("tableFeeSchedule");
+        var rows = table.getElementsByTagName("tr")
+         for (var i = 0; i < rows.length; i++) {
+            totalRowCount++;
+            if (rows[i].getElementsByTagName("td").length > 0) {
+                rowCount++;
+                var str ="checkboxInput"+rowCount; 
+                alert(document.getElementById(str).checked);
+               
+            }
+        }
+        var message = "Total Row Count: " + totalRowCount;
+        message += "\nRow Count: " + rowCount;
+        alert(message);
+        */
+         var r;
+        if(schedulerCount>0){
+           r = confirm(schedulerCount+" Scheduler is running on the stages. Do you still want to delete?");
+        }
+        else{
+          r = confirm("Are you sure you want to delete all stages?");        
+        }
+        if (r == true) {
+            startLoading();
+            RemoveAllStages(0);
+        }   
+    }
+    
+    function processLoading()
+    {
+        setInterval(checkSyncStatus, 5000);
+        if({!IsEnabled}==true)
+        {
+            startLoading();
+            
+        }
+        else
+        {
+            //stopLoad();
+        }
+    }
+    
+    function startLoading()
+    {
+        var ul = document.getElementById('el_loading');
+        ul.style.display = 'inline'; 
+        
+    }
+    
+     function startLoadingSave()
+    {
+        $('[id$=savebtn]').attr("disabled", true);
+        var ul = document.getElementById('el_loading');
+        ul.style.display = 'inline';       
+        // var obj= document.getElementById('savebtn');
+        //document.getElementById("savebtn").disabled = true;
+        // $('[$id=savebtn]').attr("disabled",true);
+    }
+    
+    function startLoadingAutoBilling()
+    {
+        var ul = document.getElementById('el_loading');
+        ul.style.display = 'inline';
+        return false;
+    }
+    
+    function stopLoad()
+    {
+        var ul = document.getElementById('el_loading');
+        ul.style.display = 'none';
+    }   
+    function submitOk()
+    {
+      successfulSync();
+    }
+    function submitSuccessfully()
+    {
+        RemoveAllStages(1);
+        successfulSync();
+    }
+    
+    function DisableDelete(checkboxVal,Id){
+        console.log(checkboxVal);
+        
+        if(checkboxVal){
+            $('[id$=icon'+Id+']').css('pointer-events','none');
+            $('[id$=icon'+Id+']').css('background-color','#808080');
+        }
+        else{
+            $('[id$=icon'+Id+']').css('pointer-events','auto');
+            $('[id$=icon'+Id+']').css('background-color','#e6717c');
+        }
+    }
+    
+    function displayRemainingTime(){
+        setInterval(function(){
+            var d = new Date();
+            $('#NextSchedulerTime').text(59-d.getSeconds());
+        }, 1000);
+    }
+    </script>  
+    
+    <style>
+        
+        .hideDropdown select{
+        display: none !important;
+        background-color: #fff;
+        color: #16325c;
+        border: 1px solid #d8dde6;
+        border-radius: .25rem;
+        width: 100%;
+        transition: border .1s linear,background-color .1s linear;
+        display: inline-block;
+        padding: 0 1rem 0 .75rem;
+        line-height: 1.875rem;
+        min-height: calc(1.875rem + (1px * 2));
+        }
+        
+        .hideDropdown input{
+        background-color: #fff;
+        color: #16325c;
+        border: 1px solid #d8dde6;
+        border-radius: .25rem;
+        width: 85%;
+        transition: border .1s linear,background-color .1s linear;
+        display: inline-block;
+        padding: 0 1rem 0 .75rem;
+        line-height: 1.875rem;
+        min-height: calc(1.875rem + (1px * 2));
+        }
+        
+        .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        opacity: 1;
+        transition: opacity 0.6s;
+        margin-bottom: 15px;
+        text-align: center;
+        font-size: 15px;
+        }
+        .alert.success {background-color: #4CAF50;}
+        .alert.info {background-color: #2196F3;}
+        .alert.warning {background-color: #ff9800;}
+        
+        .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+        }
+        
+        .closebtn:hover {
+        color: black;
+        }
+        
+        .credebt .slds-docked-form-footer{
+        display:unset;
+        position:absolute;
+        }
+        
+        .credebt .slds-table        {
+        background-color:unset;
+        table-layout:fixed;
+        }
+        
+        div.message{
+        position: fixed;
+        z-index: 500;
+        left: 40%;
+        }
+        
+        body .secondaryPalette.bPageBlock{
+        border-top: none;
+        background-color: unset !important;
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
+        }
+        
+        .apexp .bPageBlock.apexDefaultPageBlock .pbBody{
+        margin:0 !important;
+        }
+        
+        td div .errorMsg{
+        display:none;
+        
+        }
+        .pbBody{
+        color:#16325c;
+        }
+    </style>
+    
+    <apex:pagemessages />
+    <apex:pageBlock >
+        
+        <apex:outputPanel >
+            <apex:form id="frm"> 
+                <!--apex:actionPoller action="{!incrementCounter}" reRender="counter" interval="7" oncomplete="startLoading()" enabled="{!IsEnabled}" /-->
+                <apex:actionFunction action="{!invoiceBillStatus}" name="checkSyncStatus"/>
+                <apex:actionFunction action="{!closePopeUp}" name="successfulSync" oncomplete="reloadPage();" />
+                <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+                    
+                    <head>
+                        <meta charset="utf-8" />
+                        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1" />
+                        
+                        
+                        <apex:stylesheet value="{!URLFOR($Resource.SLDS, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+                        
+                    </head>
+                    
+                    <body>
+                        
+                        
+                        <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height:100%;opacity:0.75;width:100%;display:none;">
+                            <div class="waitingHolder" style="top: 100px; width: 91px;">
+                                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..."  style="width: 40;height:60;"/>
+                                <span class="waitingDescription">Please Wait . . . .</span>
+                            </div>
+                        </div>
+                        
+                        <div class="credebt">
+                            <div class="slds-spinner_container" id="slds_spinner" style="display:none;">
+                                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                                    <span class="slds-assistive-text">Loading</span>
+                                    <div class="slds-spinner__dot-a"></div>
+                                    <div class="slds-spinner__dot-b"></div>
+                                </div>
+                            </div>
+                            
+                            <apex:outputPanel >
+                                
+                                <apex:outputpanel id="errorup" rendered="{!ShowDialogue}">
+                                    <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open" >
+                                        <div class="slds-modal__container" style="display: block;">
+                                            <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                                            <apex:outputPanel rendered="{!ShowDialogue}">
+                                                <div class="slds-modal__header">
+                                                    <h2 id="header99" class="slds-text-heading--medium">{!popUpHeading}</h2>
+                                                </div>
+                                            </apex:outputPanel>
+                                            
+                                            <!--###### MODAL BOX BODY Part Start From Here ######-->
+                                            <div class="slds-modal__content slds-p-around--medium" style="overflow: auto;max-height: 300px;">
+                                                <p><b>
+                                                    <apex:outputText escape="false" value="{!userMessage}" rendered="{!ShowDialogue}" />
+                                                    </b>
+                                                </p>
+                                            </div>
+                                            <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                                            <apex:outputPanel rendered="{!ShowDialogue}">
+                                                <div class="slds-modal__footer">
+                                                    <button class="slds-button slds-button--brand" onClick="submitOk();return false;"> Ok</button>
+                                                </div>
+                                            </apex:outputPanel>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="slds-backdrop slds-backdrop--open"></div>
+                                    <!--###### MODAL BOX Part END Here ######-->
+                                </apex:outputpanel>
+                                
+                                
+                                <apex:outputpanel id="errorup2" rendered="{!showDialogBox}">
+                                    <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open" >
+                                        <div class="slds-modal__container" style="display: block;">
+                                            <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                                            <apex:outputPanel rendered="{!showDialogBox}">
+                                                <div class="slds-modal__header">
+                                                    <h2 id="header99" class="slds-text-heading--medium">{!popUpHeading}</h2>
+                                                </div>
+                                            </apex:outputPanel>
+                                            
+                                            <!--###### MODAL BOX BODY Part Start From Here ######-->
+                                            <div class="slds-modal__content slds-p-around--medium" style="overflow: auto;max-height: 300px;">
+                                                <p><b>
+                                                    <apex:outputText escape="false" value="{!userMessage}" rendered="{!showDialogBox}" />
+                                                    </b>
+                                                </p>
+                                            </div>
+                                            <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                                            <apex:outputPanel rendered="{!showDialogBox}">
+                                                <div class="slds-modal__footer">
+                                                    <button class="slds-button slds-button--brand" onClick="submitSuccessfully();return false;"> Confirm </button>
+                                                
+                                                    <button class="slds-button slds-button--brand" onClick="submitOk();return false;"> Cancel</button>
+                                                </div>
+                                            </apex:outputPanel>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="slds-backdrop slds-backdrop--open"></div>
+                                    <!--###### MODAL BOX Part END Here ######-->
+                                </apex:outputpanel>
+                                
+                                
+                                <div id="notification" class="alert" style="display: none;">
+                                    <span class="closebtn"><a title="dismiss this notification" onlick="$('#notification').hide();" >x</a></span>
+                                    <div id="alertmsg"> </div>
+                                </div>
+                                
+                                <apex:actionFunction name="ReloadPage" action="{!ReturnPage}"/>
+                                <apex:actionFunction name="RefreshWindow" action="{!RefreshWindow}"/>
+                                <apex:actionFunction name="resetFlags" action="{!resetFlags}"/>
+                                <apex:actionFunction name="AddMore" action="{!AddMore}" reRender="ren"/>
+                                <apex:actionFunction name="RemoveItem" action="{!RemoveItem}" reRender="multipleFound">    
+                                    <apex:param assignTo="{!itemIndex}" value="" name="ItemIndex" />
+                                </apex:actionFunction>
+                                <apex:actionFunction name="RemoveItem" action="{!RemoveItem}" reRender="multipleFound">    
+                                    <apex:param assignTo="{!itemIndex}" value="" name="ItemIndex" />
+                                </apex:actionFunction>
+                                
+                                <apex:actionFunction name="RemoveAllStages" action="{!RemoveAllStages}" reRender="multipleFound">
+                               <apex:param assignTo="{!confirmed}" value="" name="Confirmed" />
+                                </apex:actionFunction>
+                                <apex:actionFunction name="RemoveBilledItem" action="{!RemoveBilledItem}" reRender="multipleFound">    
+                                    <apex:param assignTo="{!itemIndex}" value="" name="ItemIndex" />
+                                </apex:actionFunction>
+                                <apex:actionFunction name="refreshTable" rerender="totals" />
+                                
+                                <apex:outputPanel id="multipleFound">
+                                    <script>
+                                    var deleteLoading = {!refreshOnDelete};
+                                    if(deleteLoading){
+                                        startLoading();
+                                    }
+                                    var multiplerror = {!multipleFoundError};
+                                        var multiplerrorNew = {!multipleFoundErrorNew};
+                                    var refreshPage = {!refreshInvoices};
+                                    var reloadPageObj = {!reloadPageObj};
+
+                                    resetFlags();
+                                    if(multiplerrorNew){
+                                         var r = confirm("Are you sure you want to delete the Invoices?"); 
+                                        if(r){
+                                            //alert("Confirmed Delete");
+                                            //RemoveAllStages(1);
+                                            //stopLoad();
+                                           }
+                                    }
+                                    else if(multiplerror){
+                                        alert("You cannot delete stage as billed invoices exist with multiple line items including this stage.");
+                                        stopLoad();
+                                    }
+                                    else if (refreshPage == false){
+                                        
+                                    }
+                                    else{
+                                        if(reloadPageObj){
+                                        }else{
+                                            alert('==Reached---');
+                                            reloadPage();
+                                        }                                       
+                                    }
+                                    </script>
+                                </apex:outputPanel>
+                                
+                                <div class="slds-page-header">
+                                    <div class="slds-grid" style="width: 30%;display:  inline-block;">
+                                        <div class="slds-col slds-has-flexi-truncate">
+                                            <div class="slds-media slds-no-space slds-grow">
+                                                <div class="slds-media__figure">
+                                                    <svg class="slds-icon slds-icon-standard-user" aria-hidden="true">
+                                                        <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#user"></use>
+                                                    </svg>
+                                                </div>
+                                                <div class="slds-media__body">
+                                                   
+                                                    <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="{!Opportunity.Name}">Fee Schedule</h1>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                       <div style="width: 15%;display:  inline-block;vertical-align: middle;text-align:  right;">
+                                            <apex:commandButton styleClass="slds-button slds-button--neutral" value="Delete All Stages" onclick="deleteAllStages({!numberOfSchedulers}); return false;"                                />
+                                    </div>                        
+                                    <div style="width: 47%;display:  inline-block;vertical-align: middle;text-align:  right;">
+                                        <b>Next Scheduler Time Remaining : </b> 
+                                        <span id="NextSchedulerTime" style="font-size: 1.25rem;">--</span>
+                                        <b> Seconds</b>
+                                    </div>                                   
+                                </div>
+                                <apex:outputPanel id="ren" >
+                                    <script>
+                                    console.log("calledAgain");
+                                    renderDelete();
+                                    </script>
+                                    <div style="overflow-y:scroll; height:28rem; ">
+                                        
+                                        <table class="slds-table slds-table--bordered slds-table--cell-buffer" id="tableFeeSchedule">
+                                            <thead>
+                                                <tr >
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Sr. No.">Sr. No.</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Invoice Name">Stage</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Fee (%)">Fee (%)</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Fee ($)">Fee ($)</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Time Frame (Weeks)">Time Frame (Weeks)</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Delays">Delays</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Bill (%)">Bill (%)</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Billed">Billed</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Locked">Locked</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Actions">Actions</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                                <apex:variable var="count" value="{!1}" />
+                                                <apex:variable var="feePerc" value="{!0}" />
+                                                <apex:variable var="fee" value="{!0}" />
+                                                <apex:variable var="bill" value="{!0}" />
+                                                <apex:variable var="billed" value="{!0}" />
+                                                <apex:repeat value="{!Invoices}" var="inv">
+                                                    <tr id="{!count}">
+                                                       <th scope="row" data-label="Sr. No.">
+                                                            {!count}
+                                                        </th>
+                                                       <th scope="row" data-label="Stage">
+                                                            <div class="slds-truncate" title="{!inv.Name}">
+
+                                                                <apex:inputfield styleClass="slds-input" value="{!inv.Name}" />
+                                                            </div>
+                                                        </th>
+                                                        <td data-label="Fee (%)">
+                                                            <div class="slds-truncate" title="{!inv.Fee_Percentage__c}">
+                                                                <apex:outputfield styleClass="slds-input" value="{!inv.Fee_Percentage__c}" />
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Fee ($)">
+                                                            <div class="slds-truncate" title="{!inv.Fee__c}">
+                                                                
+                                                                <apex:inputfield styleClass="slds-input" value="{!inv.Fee__c}"  />
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Time Frame (Per Building)">        
+                                                            <div class="slds-truncate" title="{!inv.Time_Frame__c}">
+                                                                <apex:inputfield styleClass="slds-input" value="{!inv.Time_Frame__c}"  />
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Time Frame (Per Building)">        
+                                                            <div class="slds-truncate" title="{!inv.Delays_Month__c}">
+                                                                <apex:inputfield styleClass="slds-input" value="{!inv.Delays_Month__c}" />
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Bill (%)">
+                                                            <div class="slds-truncate" title="{!inv.Bill__c}">
+                                                                <apex:inputfield styleClass="slds-input" value="{!inv.Bill__c}" onkeyup="refresh()" />
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Billed">
+                                                            <div class="slds-truncate" title="{!inv.Billed__c}">
+                                                                <apex:outputfield styleClass="slds-input" value="{!inv.Billed__c}"/>
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Locked">
+                                                            <div class="slds-truncate" title="{!inv.Locked__c}" Id="checkbox{!count}">
+                                                                <apex:inputfield style="zoom: 2" html-data-id="checkboxInput{!count}" styleClass="slds-checkbox" value="{!inv.Locked__c}" onchange="DisableDelete(this.checked,'{!count}')"/>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td data-label="Action">
+                                                            <div class="slds-truncate">
+                                                                
+                                                                <apex:outputpanel title="Delete">
+                                                                    <span Id="icon{!count}" style="padding:.3rem" class="slds-icon_container slds-icon-action-delete slds-icon_container--circle" data-reactid="139" onclick="deleteItem('{!inv.Id}', '{!count}', '{!inv.name}','{!inv.Billed__c}');">
+                                                                        <svg style="width:1.2rem; height:1.2rem" class="slds-icon slds-icon--small" aria-hidden="true" data-reactid="140">
+                                                                            <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                                                                        </svg>
+                                                                    </span>
+                                                                </apex:outputpanel>
+                                                                
+                                                                
+                                                            </div>
+                                                            
+                                                        </td>
+                                                    </tr>
+                                                    <apex:variable value="{!count+1}" var="count"/>
+                                                    <apex:variable value="{!if(inv.Fee_Percentage__c!=null && inv.Name!='Retainer',feePerc+inv.Fee_Percentage__c,feePerc+0)}" var="feePerc"/>
+                                                    <apex:variable value="{!if(inv.Fee__c!=null && inv.Name!='Retainer',fee+inv.Fee__c,fee+0)}" var="fee"/>
+                                                    <apex:variable value="{!if(inv.Bill__c!=null,bill+(inv.Bill__c*inv.Fee__c)/100,bill+0)}" var="bill"/>
+                                                    <apex:variable value="{!if(inv.Amount__c!=null,billed+inv.Amount__c,billed+0)}" var="billed"/>
+                                                </apex:repeat>
+                                                
+                                                
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                    <apex:outputPanel id="totals" >
+                                        <div class="slds-docked-form-footer" >
+                                            <div>
+                                                <table class="slds-table slds-table--cell-buffer">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="slds-truncate">
+                                                                    TOTALS 
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="slds-truncate">
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="slds-truncate" style="text-align:left">
+                                                                    {!feePerc}%
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="slds-truncate">
+                                                                    <apex:outputText value="{0, number, ###,##0.00}">
+                                                                        $<apex:param value="{!fee}"/>
+                                                                    </apex:outputText>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="slds-truncate">
+                                                                    
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="slds-truncate">
+                                                                    
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="slds-truncate">
+                                                                    <apex:outputText value="{0, number, ###,##0.00}">
+                                                                        $<apex:param value="{!bill}"/>
+                                                                    </apex:outputText>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="slds-truncate">
+                                                                    <apex:outputText value="{0, number, ###,##0.00}">
+                                                                        $<apex:param value="{!billed}"/>
+                                                                    </apex:outputText>
+                                                                </div>
+                                                            </td>
+                                                            <td >
+                                                                <div class="slds-truncate">
+                                                                </div>
+                                                            </td>
+                                                            <td >
+                                                                <div class="slds-truncate">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                         
+                                            <div style="width:95% ; padding-top:1%">   
+                                               
+                                                <div  style="display:  inline-block; float:left;padding-left:3%;width:50%">
+                                                    
+                                                <div style="display:  inline-block;vertical-align: middle;text-align:  ">   
+                                                    <p  style="display:  inline-block;" class="slds-line-height--reset">Start Date &nbsp;&nbsp;&nbsp;</p>
+                                                    <apex:input style="display:  inline-block;" type="date" value="{!startMonth}"  />
+                                                 </div>
+                                                <div style="display:  inline-block;padding-left:3%;vertical-align: middle;text-align:  ">                                                                                 
+                                                    <p   style="display:  inline-block;" class="slds-line-height--reset">Month(s)&nbsp;&nbsp;&nbsp;</p>
+                                                    <apex:selectList value="{!selectedVal}" size="1" style="display:inline-block;"> 
+                                                        <apex:selectOptions value="{!openPresentationOptions}" /> 
+                                                    </apex:selectList>
+                                                </div>
+                                                <div style="display:  inline-block;padding-left:3%;vertical-align: middle;text-align:  ">                                                                                 
+                                                    
+                                                    <apex:commandButton styleClass="slds-button slds-button--brand" value="Schedule Billing" action="{!runSchedule}" onclick="startLoading();" oncomplete="processLoading(); return false;"
+                                                                        />
+                                                </div>       
+                                                </div>
+                                                <div style="display:  inline-block; float:right">
+
+                                                <apex:commandButton styleClass="slds-button slds-button--brand" value="Add Service" onclick="AddMore(); return false;"
+                                                                    />
+                                                <apex:commandButton styleClass="slds-button slds-button--brand" id="savebtn" value="Save" action="{!save}" onclick="startLoadingSave();" oncomplete="processLoading(); return false;"
+                                                                    />
+                                                <apex:commandButton styleClass="slds-button slds-button--neutral" value="Cancel" onclick="reloadPage(); return false;"
+                                                                    />
+                                                </div>
+                                            </div>
+                                        
+                                        </div>
+                                        
+                                    </apex:outputPanel>
+                                    
+                                </apex:outputPanel>
+                                
+                                
+                                
+                                
+                                
+                                
+                            </apex:outputPanel>
+                        </div>
+                        
+                    </body>
+                    
+                </html>
+            </apex:form>
+        </apex:outputPanel>
+        
+    </apex:pageBlock>
+</apex:page>

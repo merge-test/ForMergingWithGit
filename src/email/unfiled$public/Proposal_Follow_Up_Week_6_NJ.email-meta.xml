@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Proposal Follow Up Week 6_NJ</name>
+    <style>none</style>
+    <subject>{!Opportunity.Name} Proposal</subject>
+    <textOnly>Hi {!Opportunity.proposal_issued_to_1__c}, 
+
+It’s been over a month since I sent you a proposal for the scope of work we’ve discussed. Do you have any questions I can help clarify on the proposal? I’m here to help move forward with the project in any way I can. Communication always helps further develop a clear scope of work. 
+
+This blog article that I wrote listed helps describes meeting the New Jersey Energy Code in Commercial and Large Residential Buildings: 
+
+https://www.ny-engineers.com/blog/new-jersey-energy-code-in-commercial-and-residential-buildings
+
+Please contact me at your earliest convenience. 
+
+Thank you! 
+{!Opportunity.Sales_Head__c}, Principal 
+
+New Jersey Engineers
+https://www.ny-engineers.com/new-jersey-mep-engineering
+973.928.0343
+alexg@nj-engineers.com</textOnly>
+    <type>custom</type>
+</EmailTemplate>

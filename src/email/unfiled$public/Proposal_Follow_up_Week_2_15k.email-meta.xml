@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Proposal Follow up Week 2 (&gt;15k)</name>
+    <style>none</style>
+    <subject>PROPOSAL STATUS FOLLOW UP #2</subject>
+    <textOnly>Hi {!Opportunity.proposal_issued_to_1__c},
+
+At New York Engineers we pride ourselves on being the most efficient Engineering Design Firm. So much so that we believe we should be the lowest priced team bidding on your project at {!Opportunity.Name}.
+
+If there is another bid significantly lower than ours, we would love the opportunity to review it.  Often times lower prices either mean they are inexperienced or do not understand the full scope of the project.  Both outcomes will cost you more by the end of the project.
+
+I would also be happy to walk with you around a job we have recently completed to demonstrate our ability as Engineers. Please give me a call and we can set up a time and place.
+
+Thank you!
+{!Opportunity.Sales_Head__c}, Principal
+
+135 W 41st Street, 5th Floor
+New York, NY 10018
+212.575.5300
+w. NYE FaceBook</textOnly>
+    <type>custom</type>
+</EmailTemplate>

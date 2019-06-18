@@ -1,0 +1,19 @@
+Hi {!Opportunity.proposal_issued_to_1__c},
+<br>
+<br>I recently reached out to you regarding the status of the proposal {!Opportunity.Name}.  At New Jersey Engineers we pride ourselves on issuing fully complete proposals to cover all your scope.  Many engineering firms exclude items that are needed and will charge you for them later, resulting in engineering fees doubling or tripling over the project duration.  Some of these items include: Special Inspections, Self Certification, Unlimited Design Meetings, Energy ComCheck, Construction Administration, Utility Filings for Water, Sewer, Gas, Electric.
+<br>
+<br>Don't fall into this trap which will cost you more money.
+<br>
+<br>If another proposal is lower than ours we are happy to review it for completeness, just reply to this email with the other proposal and we'll review it and give you the results in 2 days. 
+<br>
+<br>Once you compare proposals of equal scope, New Jersey Engineers is always the most affordable firm.
+<br>
+<br>
+<br>
+<br>Thank you!
+<br>{!Opportunity.Sales_Head__c}, Principal 
+<br>
+<br>New Jersey Engineers
+<br> https://www.ny-engineers.com/new-jersey-mep-engineering
+<br> 973.928.0343
+<br>alexg@nj-engineers.com

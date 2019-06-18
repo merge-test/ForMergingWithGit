@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>DBSync_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <description>DBSync Username</description>
+        <externalId>false</externalId>
+        <inlineHelpText>DBSync UserName</inlineHelpText>
+        <label>DBSync Id</label>
+        <length>150</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DBSync_Profile__c</fullName>
+        <deprecated>false</deprecated>
+        <description>DBSync Profile Name</description>
+        <externalId>false</externalId>
+        <inlineHelpText>DBSync Profile Name</inlineHelpText>
+        <label>DBSync Profile</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DBSync_Token__c</fullName>
+        <deprecated>false</deprecated>
+        <description>DBSync Token</description>
+        <externalId>false</externalId>
+        <inlineHelpText>DBSync Token</inlineHelpText>
+        <label>DBSync Token</label>
+        <length>175</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QBOE_Connection_Ticket__c</fullName>
+        <defaultValue>&apos;trigger=false&apos;</defaultValue>
+        <deprecated>false</deprecated>
+        <description>QuickBooks Online settings. &apos;trigger=true&apos; will activate automatic push to QBOE</description>
+        <externalId>false</externalId>
+        <inlineHelpText>QuickBooks Online settings. &apos;trigger=true&apos; will activate automatic push to QBOE</inlineHelpText>
+        <label>QBOE Settings</label>
+        <length>250</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QBOE_DBSync_Server__c</fullName>
+        <deprecated>false</deprecated>
+        <description>DBSync Server URL</description>
+        <externalId>false</externalId>
+        <inlineHelpText>DBSync Server URL</inlineHelpText>
+        <label>DBSync Server URL</label>
+        <length>250</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QB_SalesRep_ID__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>QB SalesRep ID</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+</CustomObject>

@@ -1,0 +1,20 @@
+{!Contact.Sales_Head__c}
+<br>
+<br>A Lead {!Contact.Full_Name__c} has been assigned to you.  They have expressed interest in working with us and the sooner they are contacted the better.
+<br>
+<br>{!Contact.Phone}
+<br>{!Contact.Email}
+<br>{!Account.Name}
+<br>
+<br>
+<br>Keith Notes
+<br>{!Contact.Description}
+<br>
+<br>If you have questions about {!Contact.Full_Name__c} please ask Manager- Projects, Keith Fink and he will gladly hand over any information he has.
+<br>
+<br>Best,
+<br>Manager- Projects, 
+<br>Keith Fink
+<br>
+<br>
+<br>DISCLAIMER: This message is meant for the intended party and no others. This data has been scienced by professionals and non data scientists may hurt themselves trying to comprehend its beauty

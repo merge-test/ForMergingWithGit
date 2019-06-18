@@ -1,0 +1,12 @@
+{!Contact.Sales_Head__c}
+<br>
+<br>Your Contact {!Contact.Full_Name__c} has not been contacted in a week.  They have expressed interest in working with New Jersey Engineers and the sooner they are contacted the better.
+<br>
+<br>If you have questions about {!Contact.Full_Name__c} please ask Manager- Projects, Keith Fink and he will gladly hand over any information he has.
+<br>
+<br>Best
+<br>Manager- Projects, 
+<br>Keith Fink
+<br>
+<br>
+<br>DISCLAIMER: This message is meant for the intended party and no others. This data has been scienced by professionals and non data scientists may hurt themselves trying to comprehend its beauty

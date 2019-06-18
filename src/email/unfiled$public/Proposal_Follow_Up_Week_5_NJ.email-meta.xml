@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Proposal Follow Up Week 5_NJ</name>
+    <style>none</style>
+    <subject>{!Opportunity.Name} Proposal</subject>
+    <textOnly>Hi {!Opportunity.proposal_issued_to_1__c},
+
+I’m reaching out to make sure your project is completed in a timely fashion and meets any deadlines that you might have anticipated. Your decisions now are key to making sure that the project doesn’t fall behind from the start. Luckily, however, acquiring an MEP engineer can actually accelerate the time to completion. See the blog post linked below to understand more about this:
+
+http://www.ny-engineers.com/blog/how-an-mep-engineer-accelerates-the-building-process-timeline
+
+If there is another way you prefer to discussing, or any time you would like to meet in person, just let me know how your calendar looks and we can coordinate.
+
+Thank you!
+{!Opportunity.Sales_Head__c}, Principal
+
+New Jersey Engineers
+https://www.ny-engineers.com/new-jersey-mep-engineering
+973.928.0343
+alexg@nj-engineers.com</textOnly>
+    <type>custom</type>
+</EmailTemplate>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Scheduled Invoice</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Scheduled Invoices</value>
+    </caseValues>
+    <fields>
+        <label><!-- Bill --></label>
+        <name>Bill__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duration --></label>
+        <name>Duration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice --></label>
+        <name>Invoice__c</name>
+        <relationshipLabel><!-- Scheduled Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- NumberOfTimes --></label>
+        <name>NumberOfTimes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Opportunity --></label>
+        <name>Opportunity__c</name>
+        <relationshipLabel><!-- Scheduled Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- lastUpdated --></label>
+        <name>lastUpdated__c</name>
+    </fields>
+    <fields>
+        <label><!-- startDate --></label>
+        <name>startDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- uniqueName --></label>
+        <name>uniqueName__c</name>
+    </fields>
+    <layouts>
+        <layout>Scheduled Invoice Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

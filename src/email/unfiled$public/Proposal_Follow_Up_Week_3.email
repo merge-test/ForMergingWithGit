@@ -1,0 +1,21 @@
+Hi {!Opportunity.proposal_issued_to_1__c},
+<br>
+<br>I recently reached out to you regarding the status of the proposal {!Opportunity.Name}. I understand that you’re busy and may not have had some time to review the information just yet. Part of that uncertainty can be surrounding contractor decisions. 
+<br>
+<br>We discuss how to choose the best contractor for your job here: 
+<br><a href="http://www.ny-engineers.com/blog/how-to-select-an-engineering-consultant"> http://www.ny-engineers.com/blog/how-to-select-an-engineering-consultant</a>
+<br>
+<br>Have a great day!
+<br>
+<br>Regards, 
+<br> {!Opportunity.Sales_Head__c}, Principal 
+<br>
+<br> 275 West 39th Street, 2nd Floor
+<br> New York, NY 10018
+<br> 212.575.5300 
+<br> michaelt@ny-engineers.com
+<br>w. NYE FaceBook
+<br>
+<br>For fastest new project proposal response, send scope directly to: proposal@ny-engineers.com
+<br>For fastest submittal review, send directly to: submittal@ny-engineers.com
+<br>For fastest DOB form review, send directly to: DOB@ny-engineers.com

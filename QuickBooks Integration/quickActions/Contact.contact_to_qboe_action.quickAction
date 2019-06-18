@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Push Salesforce Contact to QBO Customer / Contact (Lightening)</description>
+    <height>250</height>
+    <label>SF Contact &gt;&gt; QBO Customer/Contact</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <page>CreateContactFromSF2QBO</page>
+    <type>VisualforcePage</type>
+    <width>-100</width>
+</QuickAction>

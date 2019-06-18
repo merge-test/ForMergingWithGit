@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Not Yet Contacted Email_NJ</name>
+    <style>none</style>
+    <subject>{!Contact.Full_Name__c} Has not been contacted in a Week!</subject>
+    <textOnly>{!Contact.Sales_Head__c}
+
+Your Contact {!Contact.Full_Name__c} has not been contacted in a week.  They have expressed interest in working with New York Engineers and the sooner they are contacted the better.
+
+If you have questions about {!Contact.Full_Name__c} please ask Manager- Projects, Keith Fink and he will gladly hand over any information he has.
+
+Best
+Manager- Projects, 
+Keith Fink
+
+
+
+DISCLAIMER: This message is meant for the intended party and no others. This data has been scienced by professionals and non data scientists may hurt themselves trying to comprehend its beauty</textOnly>
+    <type>custom</type>
+</EmailTemplate>

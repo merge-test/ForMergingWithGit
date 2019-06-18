@@ -1,0 +1,15 @@
+Hi {!Opportunity.proposal_issued_to_1__c}, 
+<br>
+<br>I hope all is well. I’m reaching out to discuss the status of the proposal for {!Opportunity.Name}. 
+<br>
+<br>We would be happy to give you a tour around New Jersey Engineers and go over the proposal for {!Opportunity.Name} with you.
+<br>
+<br>At your earliest convenience, please give me a call to discuss the status and I would be happy to answer any questions you may have. 
+<br>
+<br>Thank you! 
+{!Opportunity.Sales_Head__c}, Principal
+<br>
+<br>New Jersey Engineers
+<br> https://www.ny-engineers.com/new-jersey-mep-engineering
+<br> 973.928.0343
+<br>alexg@nj-engineers.com

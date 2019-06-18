@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email set up to be sent from Jahnavi</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Proposal Follow Up Week 1_Jahnavi</name>
+    <style>none</style>
+    <subject>PROPOSAL STATUS FOLLOW UP</subject>
+    <textOnly>Hi {!Opportunity.proposal_issued_to_1__c}, 
+
+I hope all is well. I’m reaching out to discuss the status of the proposal for {!Opportunity.Name}. 
+
+At your earliest convenience, please give me a call to discuss the status and I would be happy to answer any questions you may have. 
+
+While you are deciding, I felt that you might find the following article to be of some interest to you: 
+
+http://www.ny-engineers.com/blog/how-to-manage-engineering-and-construction-costs-in-nyc 
+
+
+Thank you! 
+{!Opportunity.Sales_Head__c}, Principal 
+
+
+
+212.575.5300 
+jahnavi@ny-engineers.com 
+w. NYE FaceBook</textOnly>
+    <type>custom</type>
+</EmailTemplate>

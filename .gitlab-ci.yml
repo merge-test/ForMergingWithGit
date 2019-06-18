@@ -1,0 +1,47 @@
+stages:
+  - test
+  - deploy
+image: node:8.15.1
+before_script:
+  - npm install --global force-dev-tool --silent &>/dev/null
+  - apt-get update -yqq
+  - apt-get install php -yqq
+
+cache:
+  paths:
+    - /usr/local/lib/node_modules
+  untracked: true
+
+test_deployment_staging:
+  stage: test
+  allow_failure: false
+  script:
+    - bash ci/test_deployment_staging.sh
+  except:
+    - rtstaging
+    - master
+    - /^cherry-pick-.*$/
+test_deployment_production:
+  stage: test
+  allow_failure: false
+  script:
+    - bash ci/test_deployment_production.sh
+  except:
+    - rtstaging
+    - master
+    - /^cherry-pick-.*$/
+deploy_on_staging:
+  stage: deploy
+  allow_failure: false
+  only: 
+    - rtstaging
+  script:
+    - bash ci/deploy_staging.sh
+deploy_on_production:
+  stage: deploy
+  allow_failure: false
+  when: manual
+  only: 
+    - master
+  script:
+    - bash ci/deploy_production.sh

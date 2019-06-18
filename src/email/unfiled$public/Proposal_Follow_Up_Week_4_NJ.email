@@ -1,0 +1,17 @@
+Hi {!Opportunity.proposal_issued_to_1__c},
+<br>
+<br>Have you given any additional consideration to my proposal about {!Opportunity.Name}? I’d be happy to speak with you and answer any questions that may have come up.  
+<br>
+<br>If you have any questions specifically about the fees that engineering companies typically charge, you might find the information here useful: 
+<br>
+<br><a href=" http://www.ny-engineers.com/blog/why-do-consulting-engineers-cost-so-much"> why-do-consulting-engineers-cost-so-much</a>
+<br>
+<br>Please let me know if there is a time we can speak.
+<br>
+<br>Thank you! 
+<br> {!Opportunity.Sales_Head__c}, Principal 
+<br>
+<br>New Jersey Engineers
+<br> https://www.ny-engineers.com/new-jersey-mep-engineering
+<br> 973.928.0343
+<br>alexg@nj-engineers.com

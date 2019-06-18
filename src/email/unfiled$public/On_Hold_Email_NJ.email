@@ -1,0 +1,16 @@
+Hi {!Opportunity.proposal_issued_to_1__c},
+<br>
+<br>I am reaching out in regards your project at {!Opportunity.Name}.  Our proposal was sent out over a month ago, and we would like to make sure that everything is still accurate.  Changes in design and budget are common in the planning phase on sizeable projects, if this is the case we would love the opportunity to speak with you and modify our proposal as need be.
+<br>
+<br>If you aren’t interested, do I have your permission to close your file?
+<br>
+<br>Please let me know if there is a time we can speak. 
+<br>
+<br>
+<br>Thanks for your help.
+<br>{!Opportunity.Sales_Head__c}, Principal 
+<br>
+<br>New Jersey Engineers
+<br> https://www.ny-engineers.com/new-jersey-mep-engineering
+<br> 973.928.0343
+<br>alexg@nj-engineers.com

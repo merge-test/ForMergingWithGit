@@ -1,0 +1,14 @@
+Hi {!Opportunity.proposal_issued_to_1__c},
+<br>
+<br>I haven’t heard back from you in the last few months regarding the proposal for {!Opportunity.Name}, so I’m going to assume you’ve gone in a different direction or the project is not moving forward. Mind if I close the file?
+<br>
+<br>I appreciate the opportunity; please let me know if I can be of any assistance in the future. 
+<br>
+<br>Thank you!
+<br>{!Opportunity.Sales_Head__c}, Principal 
+<br>
+<br> 135 W 41st Street, 5th Floor
+<br> New York, NY 10018
+<br> 212.575.5300 
+<br>w. NYE FaceBook
+<br>

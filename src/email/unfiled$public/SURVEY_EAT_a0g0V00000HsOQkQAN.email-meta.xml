@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This is the default email alert template invitation to the Survey: Customer Satisfaction Survey</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>[Send using Workflow] Customer Satisfaction Survey</name>
+    <style>none</style>
+    <subject>{!Opportunity.proposal_issued_to_1__c}, how was your experience during {!Opportunity.Name} project?</subject>
+    <textOnly>Hi {!Opportunity.proposal_issued_to_1__c},
+
+At New York Engineers, we are constantly trying to improve our service and would like to hear your feedback on how we performed.
+
+{!IF(Contact.Id != null,IF(Case.Id != null,&apos;Customer Satisfaction Survey&apos;,&apos;Customer Satisfaction Survey&apos;),&apos;Customer Satisfaction Survey&apos;)}
+
+This survey is short and will only take one minute to complete. By participating in this survey you will be making an important contribution helping New York Engineers to improve and to serve you better. Your opinion counts. I would like to thank you in advance for your support and input. If you have any questions, please feel free to ask me.
+
+Have a good one!
+
+Adam Gorczyca, PE CEM LEED AP Principal
+275 West 39th Street, 2nd Floor
+New York, NY 10018
+212.575.5300
+adam@ny-engineers.com
+w. NYE FaceBook
+
+For fastest new project proposal response, send scope directly to: proposal@ny-engineers.com
+For fastest submittal review, send directly to: submittal@ny-engineers.com
+For fastest DOB form review, send directly to: DOB@ny-engineers.com</textOnly>
+    <type>custom</type>
+</EmailTemplate>

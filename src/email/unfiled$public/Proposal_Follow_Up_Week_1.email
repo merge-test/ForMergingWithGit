@@ -1,0 +1,19 @@
+Hi {!Opportunity.proposal_issued_to_1__c},
+<br>
+<br>I hope all is well.  I’m reaching out to discuss the status of the proposal for {!Opportunity.Name}.
+<br>
+<br>At your earliest convenience, please give me a call to discuss the status and I would be happy to answer any questions you may have.
+<br>
+<br>While you are deciding, I felt that you might find the following article to be of some interest to you:
+<br>
+<br><a href="http://www.ny-engineers.com/blog/how-to-manage-engineering-and-construction-costs-in-nyc"> http://www.ny-engineers.com/blog/how-to-manage-engineering-and-construction-costs-in-nyc</a>
+<br>
+<br>
+<br>Thank you!
+<br> {!Opportunity.Sales_Head__c}, Principal
+<br>
+<br>135 W 41st Street, 5th Floor
+<br>New York, NY 10018
+<br>212.575.5300 
+<br>w. NYE FaceBook
+<br>

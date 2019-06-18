@@ -1,0 +1,7 @@
+You have marked the Follow Up date as tomorrow for {!Opportunity.Name}
+<br>
+<br>The following is Project Specific Information 
+<br>Proposal Issued to: {!Opportunity.proposal_issued_to_1__c}
+<br>Proposal Issued Date: {!Opportunity.Proposal_Issued__c}
+<br>
+<br>{!Opportunity.Scope__c}

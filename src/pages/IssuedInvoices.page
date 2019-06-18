@@ -1,0 +1,254 @@
+<apex:page standardController="Opportunity" extensions="InvoiceController" showHeader="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" id="pg"  SIdebar="false" >
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.js">
+    </script>
+   
+    <style>
+        
+        .hideDropdown select{
+        display: none !important;
+        background-color: #fff;
+        color: #16325c;
+        border: 1px solid #d8dde6;
+        border-radius: .25rem;
+        width: 100%;
+        transition: border .1s linear,background-color .1s linear;
+        display: inline-block;
+        padding: 0 1rem 0 .75rem;
+        line-height: 1.875rem;
+        min-height: calc(1.875rem + (1px * 2));
+        }
+        
+        .hideDropdown input{
+        background-color: #fff;
+        color: #16325c;
+        border: 1px solid #d8dde6;
+        border-radius: .25rem;
+        width: 85%;
+        transition: border .1s linear,background-color .1s linear;
+        display: inline-block;
+        padding: 0 1rem 0 .75rem;
+        line-height: 1.875rem;
+        min-height: calc(1.875rem + (1px * 2));
+        }
+        
+        .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        opacity: 1;
+        transition: opacity 0.6s;
+        margin-bottom: 15px;
+        text-align: center;
+        font-size: 15px;
+        }
+        .alert.success {background-color: #4CAF50;}
+        .alert.info {background-color: #2196F3;}
+        .alert.warning {background-color: #ff9800;}
+        
+        .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+        }
+        
+        .closebtn:hover {
+        color: black;
+        }
+        
+        .credebt .slds-docked-form-footer{
+        display:unset;
+        position:absolute;
+        }
+        
+        .credebt .slds-table        {
+        background-color:unset;
+        table-layout:fixed;
+        }
+        
+        div.message{
+        position: fixed;
+        z-index: 500;
+        left: 40%;
+        }
+        
+        body .secondaryPalette.bPageBlock{
+        border-top: none;
+        background-color: unset !important;
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
+        }
+        
+        .apexp .bPageBlock.apexDefaultPageBlock .pbBody{
+        margin:0 !important;
+        }
+        
+        td div .errorMsg{
+        display:none;
+        
+        }
+        .pbBody{
+        color:#16325c;
+        }
+    </style>
+    
+    <apex:pagemessages />
+    <apex:pageBlock >
+        <apex:outputPanel >
+            
+            
+            <apex:form id="frm"> 
+                <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+                    
+                    <head>
+                        <meta charset="utf-8" />
+                        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1" />
+                        
+                        
+                        <apex:stylesheet value="{!URLFOR($Resource.SLDS, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+                        
+                    </head>
+                    
+                    <body>
+                        <div class="credebt">
+                            
+                            <div class="slds-spinner_container" id="slds_spinner" style="display:none;">
+                                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                                    <span class="slds-assistive-text">Loading</span>
+                                    <div class="slds-spinner__dot-a"></div>
+                                    <div class="slds-spinner__dot-b"></div>
+                                </div>
+                            </div>
+                            
+                            <apex:outputPanel >
+                                
+                                <div id="notification" class="alert" style="display: none;">
+                                    <span class="closebtn"><a title="dismiss this notification" onlick="$('#notification').hide();" >x</a></span>
+                                    <div id="alertmsg"> </div>
+                                </div>
+                               
+                                <div class="slds-page-header">
+                                    <div class="slds-grid">
+                                        <div class="slds-col slds-has-flexi-truncate">
+                                            <div class="slds-media slds-no-space slds-grow">
+                                                <div class="slds-media__figure">
+                                                    <svg class="slds-icon slds-icon-standard-user" aria-hidden="true">
+                                                        <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#user"></use>
+                                                    </svg>
+                                                </div>
+                                                <div class="slds-media__body">
+                                                    <p class="slds-text-title--caps slds-line-height--reset">Issued Invoices</p>
+                                                    <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="this should match the Record Title">Issued Invoices</h1>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <apex:outputPanel id="ren" >
+                                    <div style="overflow-y:scroll; height:20rem; ">
+                                        
+                                        <table class="slds-table slds-table--bordered slds-table--cell-buffer" >
+                                            <thead>
+                                                <tr class="slds-text-title--caps">
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Sr. No.">Sr. No.</div>
+                                                    </th>
+                                                    
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Issued Invoice Number">Issued Invoice Number</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Days Outstanding (Days)">Days Outstanding (Days)</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Gross Amount (Total Amount)">Gross Amount (Total Amount)</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Amount Paid">Amount Paid</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Status">Status</div>
+                                                    </th>
+                                                 
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Invoice Date">Invoice Date</div>
+                                                    </th>
+                                                    
+                                                    <th scope="col">
+                                                        <div class="slds-truncate" title="Invoice">Invoice</div>
+                                                    </th>                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                              
+                                                <apex:variable var="count" value="{!1}" />
+                                               
+                                                <apex:repeat value="{!IssuedInvoices}" var="inv">
+                                                    <tr>
+                                                        
+                                                        <th scope="row" data-label="Sr. No.">
+                                                            {!count}
+                                                        </th>
+                                                       
+                                                        <th scope="row" data-label="Issued Invoice Number">
+                                                            <div class="slds-truncate" title="{!inv.title}">
+                                                                <apex:outputLink target="_blank" value="https://c10.qbo.intuit.com/app/invoice?txnId={!inv.QB_Id__c}">{!inv.title}</apex:outputLink>
+                                                            </div>
+                                                        </th>
+                                                        <th scope="row" data-label="Days Outstanding">
+                                                            <div class="slds-truncate" title="{!inv.Days_Outstanding__c}">
+                                                                <apex:outputfield styleClass="slds-input" value="{!inv.Days_Outstanding__c}" />
+                                                               
+                                                            </div>
+                                                        </th>
+                                                        <td data-label="Net Amount">
+                                                            <div class="slds-truncate" title="{!inv.Amount__c}">
+                                                                <apex:outputfield styleClass="slds-input" value="{!inv.Amount__c}" />
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Gross Amount">
+                                                            <div class="slds-truncate" title="{!inv.Gross_Amount__c}">
+                                                                <apex:outputfield styleClass="slds-input" value="{!inv.Gross_Amount__c}" />
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Status">
+                                                            <div class="slds-truncate" title="{!inv.Status__c}">
+                                                                <apex:outputfield styleClass="slds-input" value="{!inv.Status__c}" />
+                                                            </div>
+                                                        </td>
+                                                        <td scope="row" data-label="Invoice Date">
+                                                            <div class="slds-truncate" title="{!inv.QBCreated_Date__c}">
+                                                                <apex:outputfield styleClass="slds-input" value="{!inv.QBCreated_Date__c}" />
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Invoice">        
+                                                            <div class="slds-truncate" title="{!inv.ContentDocumentId}">
+                                                                 <apex:outputLink value="{!$Label.Salesforce_Url}/{!inv.ContentDocumentId}" target="blank">View</apex:outputLink> 
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <apex:variable value="{!count+1}" var="count"/>
+                                                </apex:repeat>
+                                            </tbody>
+                                            
+                                        </table>
+                                    </div>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </div>
+                    </body>
+                    
+                </html>
+            </apex:form>
+        </apex:outputPanel>
+        
+    </apex:pageBlock>
+</apex:page>

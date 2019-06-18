@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AnalyticSnapshot xmlns="http://soap.sforce.com/2006/04/metadata">
+    <mappings>
+        <sourceField>JobName</sourceField>
+        <sourceType>snapshot</sourceType>
+        <targetField>cost_of_campaign_Snapshot__c.Name</targetField>
+    </mappings>
+    <mappings>
+        <sourceField>FIRST_NAME</sourceField>
+        <sourceType>tabular</sourceType>
+        <targetField>cost_of_campaign_Snapshot__c.First_Name__c</targetField>
+    </mappings>
+    <mappings>
+        <sourceField>LAST_NAME</sourceField>
+        <sourceType>tabular</sourceType>
+        <targetField>cost_of_campaign_Snapshot__c.Last_Name__c</targetField>
+    </mappings>
+    <mappings>
+        <sourceField>TASK_TYPE</sourceField>
+        <sourceType>tabular</sourceType>
+        <targetField>cost_of_campaign_Snapshot__c.Type__c</targetField>
+    </mappings>
+    <mappings>
+        <sourceField>CALLTYPE</sourceField>
+        <sourceType>tabular</sourceType>
+        <targetField>cost_of_campaign_Snapshot__c.Call_Type__c</targetField>
+    </mappings>
+    <mappings>
+        <sourceField>SUBJECT</sourceField>
+        <sourceType>tabular</sourceType>
+        <targetField>cost_of_campaign_Snapshot__c.Subject__c</targetField>
+    </mappings>
+    <mappings>
+        <sourceField>Activity.Cost_of_Campaign__c</sourceField>
+        <sourceType>tabular</sourceType>
+        <targetField>cost_of_campaign_Snapshot__c.cost_of_campaign__c</targetField>
+    </mappings>
+    <name>$ cost of campaign Snapshot</name>
+    <runningUser>sfdc2admin2@ny-engineers.com</runningUser>
+    <sourceReport>unfiled$public/cost_of_campaign_Snap</sourceReport>
+    <targetObject>cost_of_campaign_Snapshot__c</targetObject>
+</AnalyticSnapshot>

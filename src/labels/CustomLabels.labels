@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Default_Stage_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Stage 1</shortDescription>
+        <value>Retainer</value>
+    </labels>
+    <labels>
+        <fullName>Default_Stage_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Stage 2</shortDescription>
+        <value>Schematic Design</value>
+    </labels>
+    <labels>
+        <fullName>Default_Stage_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Stage 3</shortDescription>
+        <value>DOB Filing</value>
+    </labels>
+    <labels>
+        <fullName>Default_Stage_4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Stage 4</shortDescription>
+        <value>DOB Approval</value>
+    </labels>
+    <labels>
+        <fullName>Default_Stage_5</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Stage 5</shortDescription>
+        <value>Bid Documents</value>
+    </labels>
+    <labels>
+        <fullName>Default_Stage_6</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Stage 6</shortDescription>
+        <value>Construction Admin</value>
+    </labels>
+    <labels>
+        <fullName>Default_Stage_7</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Stage 7</shortDescription>
+        <value>Punchlist</value>
+    </labels>
+    <labels>
+        <fullName>QBO_Base_Url</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QBO customer Url</shortDescription>
+        <value>https://c10.qbo.intuit.com/app/customerdetail?nameId=</value>
+    </labels>
+    <labels>
+        <fullName>QB_API_End_Point</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB API End Point</shortDescription>
+        <value>https://quickbooks.api.intuit.com</value>
+    </labels>
+    <labels>
+        <fullName>QB_Access_token_End_Point</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Access token End Point</shortDescription>
+        <value>https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer</value>
+    </labels>
+    <labels>
+        <fullName>QB_Authorization_End_Point</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Authorization End Point</shortDescription>
+        <value>https://appcenter.intuit.com/connect/oauth2</value>
+    </labels>
+    <labels>
+        <fullName>QB_Authorization_Scope</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Authorization Scope</shortDescription>
+        <value>com.intuit.quickbooks.accounting</value>
+    </labels>
+    <labels>
+        <fullName>QB_Client_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Client Id</shortDescription>
+        <value>Q0lwt0vCPXS88I6Y22wwpjjXaMK8pxnbOOoF4Ovo2zp4lZbskt</value>
+    </labels>
+    <labels>
+        <fullName>QB_Client_Secret</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Client Secret</shortDescription>
+        <value>iB0NpF52RgMvFY0LE0QC1oQISeD0bzTShQjn6DYp</value>
+    </labels>
+    <labels>
+        <fullName>QB_Redirect_URI</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Redirect URI</shortDescription>
+        <value>https://c.na51.visual.force.com/apex/QuickBookAuthentication</value>
+    </labels>
+    <labels>
+        <fullName>QB_Timezone</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Timezone</shortDescription>
+        <value>PST</value>
+    </labels>
+    <labels>
+        <fullName>Salesforce_Url</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Salesforce Url</shortDescription>
+        <value>https://na51.salesforce.com</value>
+    </labels>
+    <labels>
+        <fullName>Scheduler_Interval</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Scheduler Interval</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>Service_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Service Id</shortDescription>
+        <value>14</value>
+    </labels>
+    <labels>
+        <fullName>Threshold</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Threshold</shortDescription>
+        <value>10</value>
+    </labels>
+</CustomLabels>

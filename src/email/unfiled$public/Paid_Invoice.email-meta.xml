@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Paid Invoice</name>
+    <style>none</style>
+    <subject>YOU GOT PAID!</subject>
+    <textOnly>Congrats!!  {!Opportunity.Account} Just paid {!Opportunity.Paid_Amount__c} to
+fulfill invoice number  {!Opportunity.Invoice_Number__c} on Project {!Opportunity.Name}.
+
+If you have any questions please email Rich, Gita, or Keith.
+
+Keep the money Rolling!</textOnly>
+    <type>custom</type>
+</EmailTemplate>

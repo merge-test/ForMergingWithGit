@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Deleted Contents QB Ids</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Processed Ids</value>
+    </caseValues>
+    <fields>
+        <label><!-- QB ID --></label>
+        <name>QB_ID__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

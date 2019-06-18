@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Proposal Follow Up Week 9_NJ</name>
+    <style>none</style>
+    <subject>{!Opportunity.Name} Proposal Close Out</subject>
+    <textOnly>Hi {!Opportunity.Sales_Head__c}, 
+
+I haven’t heard back from you in the last two months regarding the proposal for {!Opportunity.Name}, so I’m going to assume you’ve gone in a different direction or the project is not moving forward. Mind if I close the file? 
+
+I appreciate the opportunity; please let me know if I can be of any assistance in the future. 
+
+Thank you! 
+{!Opportunity.Sales_Head__c}, Principal 
+
+New Jersey Engineers
+https://www.ny-engineers.com/new-jersey-mep-engineering
+973.928.0343
+alexg@nj-engineers.com</textOnly>
+    <type>custom</type>
+</EmailTemplate>
