@@ -270,6 +270,75 @@ public class Test_InvoiceController {
     }  
     
     @isTest
+    public static void TestInvoice(){
+        Test.startTest();
+        List<QB_Credentials__c> qbcList=[Select Id, Access_token__c, Refresh_token__c,
+                                         realmid__c from QB_Credentials__c];
+        Account a=[Select Id, Name, Phone, Website, Qb_Id__c from Account where name='New York Engineers'];
+        Opportunity opp=[Select Id, Name, QB_Id__c from Opportunity where name='Test Opportunity'];
+        Test.setCurrentPage(new pageReference('/apex/Invoice?id='+opp.id));
+        List<ContentDocumentLink> issuedInvoicesLinks=[Select Id, ContentDocumentId,LinkedEntityId, LinkedEntity.name from ContentDocumentLink where 
+                                                       LinkedEntityId =:opp.Id and ContentDocument.title like 'Invoice%'];     
+        List<ContentVersion> issuedInvoices=[Select Id, Title, Amount__c, ContentDocumentId, Days_Outstanding__c from ContentVersion where ContentDocumentId=:issuedInvoicesLinks[0].ContentDocumentId
+                                             and title like 'Invoice%' order by createddate asc];
+        Invoice__c inv=[Select Id,Name, Bill__c, Amount__c from Invoice__c where Opportunity__c=:opp.Id and name='Schematic Design' Limit 1];
+       
+        inv.Billed__c=10;
+        inv.Bill__c = 10;
+        update inv;                  
+           
+        InvoiceController ic=new InvoiceController(new ApexPages.StandardController(opp));
+        ic.itemindex=1; 
+        ic.selectedVal = '1';
+       ic.startMonth = '1';
+        ic.save();        
+        ic.runSchedule();        
+        ic.getopenPresentationOptions();
+        ic.calculateDate('2019/03/29');
+        InvoiceController.getDateFromString('2019-03-29T08:31:46-07:00');
+        Test.stopTest();
+    }  
+    
+      @isTest
+    public static void TestInvoiceDuplicateInvoice(){
+        Test.startTest();
+        List<QB_Credentials__c> qbcList=[Select Id, Access_token__c, Refresh_token__c,
+                                         realmid__c from QB_Credentials__c];
+        Account a=[Select Id, Name, Phone, Website, Qb_Id__c from Account where name='New York Engineers'];
+        Opportunity opp=[Select Id, Name, QB_Id__c from Opportunity where name='Test Opportunity'];
+        Test.setCurrentPage(new pageReference('/apex/Invoice?id='+opp.id));
+        List<ContentDocumentLink> issuedInvoicesLinks=[Select Id, ContentDocumentId,LinkedEntityId, LinkedEntity.name from ContentDocumentLink where 
+                                                       LinkedEntityId =:opp.Id and ContentDocument.title like 'Invoice%'];     
+        List<ContentVersion> issuedInvoices=[Select Id, Title, Amount__c, ContentDocumentId, Days_Outstanding__c from ContentVersion where ContentDocumentId=:issuedInvoicesLinks[0].ContentDocumentId
+                                             and title like 'Invoice%' order by createddate asc];
+        Invoice__c inv=[Select Id,Name, Bill__c, Amount__c from Invoice__c where Opportunity__c=:opp.Id and name='Schematic Design' Limit 1];
+        inv.Name = 'null';
+        inv.Billed__c=0;
+        inv.Bill__c = 100;
+        inv.Fee__c = 10;
+        inv.Time_Frame__c = '10';                        
+        Invoice__c inv1=[Select Id,Name, Bill__c, Amount__c from Invoice__c where Opportunity__c=:opp.Id and name='Punchlist' Limit 1];
+        inv1.Name = 'null';
+        inv1.Billed__c=0;
+        inv1.Bill__c = 100;
+        inv1.Fee__c = 10;
+        inv1.Time_Frame__c = '10';                   
+           
+        InvoiceController ic=new InvoiceController(new ApexPages.StandardController(opp));
+        ic.itemindex=1; 
+        ic.selectedVal = '1';
+        ic.startMonth = '1';
+        ic.invoices.add(inv);
+        ic.invoices.add(inv1);
+        ic.save();        
+        ic.runSchedule();        
+        ic.getopenPresentationOptions();
+        ic.calculateDate('2019/03/29');
+        InvoiceController.getDateFromString('2019-03-29T08:31:46-07:00');
+        Test.stopTest();
+    }  
+    
+    @isTest
     public static void TestInvoiceControllerWithBillNonZero(){
         Test.startTest();
         List<QB_Credentials__c> qbcList=[Select Id, Access_token__c, Refresh_token__c,
@@ -281,14 +350,14 @@ public class Test_InvoiceController {
                                                        LinkedEntityId =:opp.Id and ContentDocument.title like 'Invoice%'];     
         List<ContentVersion> issuedInvoices=[Select Id, Title, Amount__c, ContentDocumentId, Days_Outstanding__c from ContentVersion where ContentDocumentId=:issuedInvoicesLinks[0].ContentDocumentId
                                              and title like 'Invoice%' order by createddate asc];
-        Invoice__c inv=[Select Id, Bill__c, Amount__c from Invoice__c where Opportunity__c=:opp.Id and name='Schematic Design' Limit 1];
-        inv.Name = null;
+        Invoice__c inv=[Select Id,Name, Bill__c, Amount__c from Invoice__c where Opportunity__c=:opp.Id and name='Schematic Design' Limit 1];
+        inv.Name = 'null';
         inv.Billed__c=0;
         inv.Bill__c = 100;
         inv.Fee__c = 10;
         update inv;                  
-        Invoice__c inv1=[Select Id, Bill__c, Amount__c from Invoice__c where Opportunity__c=:opp.Id and name='Punchlist' Limit 1];
-        inv1.Name = null;
+        Invoice__c inv1=[Select Id,Name, Bill__c, Amount__c from Invoice__c where Opportunity__c=:opp.Id and name='Punchlist' Limit 1];
+        inv1.Name = 'null3';
         inv1.Billed__c=0;
         inv1.Bill__c = -100;
         inv1.Fee__c = 10;
@@ -315,8 +384,8 @@ public class Test_InvoiceController {
         ic.selectedVal = '1';
         ic.save(); 
         ic.runSchedule();  
-        Invoice__c inv1=[Select Id, Bill__c, Amount__c from Invoice__c where Opportunity__c=:opp.Id and name='Punchlist' Limit 1];
-        inv1.Name = null;
+        Invoice__c inv1=[Select Id,Name, Bill__c, Amount__c from Invoice__c where Opportunity__c=:opp.Id and name='Punchlist' Limit 1];
+        inv1.Name = 'null2';
         inv1.Billed__c=0;
         inv1.Bill__c = 100;
         inv1.Fee__c = 10;

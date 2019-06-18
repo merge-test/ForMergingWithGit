@@ -16,13 +16,15 @@ public class Test_TriggerOnInvoice {
         insert opp;
         
         Invoice__c inv  = new Invoice__c();
+        inv.Name = 'Test Stage';
         inv.Opportunity__c= opp.Id;
         inv.Fee__c=10;
         inv.Bill__c=10;
         inv.Time_Frame__c ='1';
-        inv.Delays__c='2 weeks';
+        inv.Delays_Month__c=2;
         insert inv;
-        
+        inv.Delays_Month__c = 3;
+        update inv;
         ContentVersion v = new ContentVersion();
         Blob b=Blob.valueof('Test');
         v.versionData =  b;
