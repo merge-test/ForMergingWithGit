@@ -79,7 +79,7 @@
         }
         var message = "Total Row Count: " + totalRowCount;
         message += "\nRow Count: " + rowCount;
-        alert(message);
+        alert(message); sss
         */
          var r;
         if(schedulerCount>0){
